@@ -17,7 +17,7 @@ const Home = () => {
     return (
         <>
             <Helmet>
-                <title>Home | Your Site Name</title>
+                <title>Home</title>
             </Helmet>
         
             <Slider />

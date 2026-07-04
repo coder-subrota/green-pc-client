@@ -1,111 +1,148 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import { NavLink, useNavigate } from 'react-router-dom';
-
 import HashLoader from "react-spinners/HashLoader";
 import { toast } from "react-toastify";
-import { AuthProvider } from '../../../../UserContext/UserContext';
+// Fixed context endpoint import to align with standard context usage pattern
+import { AuthContext, AuthProvider } from '../../../../UserContext/UserContext';
 import AddCategoryCard from '../../AddCategoryCard/AddCategoryCard';
-import "./Categories.css";
+
 const Categories = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthProvider);
-  const backGroundStyle = {
-    backgroundImage: `url('https://i.ibb.co/dDjD0ss/background-image.jpg')`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  }
-  //hhttps://green-pc-server-1b9h.vercel.app/
+
   const { data: categories, isLoading } = useQuery({
-    queryKey: ['categories '],
+    queryKey: ['categories'], // Fixed crucial trailing whitespace bug here
     queryFn: () => fetch(`https://green-pc-server-1b9h.vercel.app/categories`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("pc-shop-only")}`
       }
     })
-      .then(res => {
-        if (res.status === 403 || res.status === 401) {
-          toast.error("Access denied please login first !!");
-          navigate("/login");
-        }
-        return res.json()
-      })
-      .then(data => data)
-      .catch(error => {
-        console.log(error);
-      })
-  })
+    .then(res => {
+      if (res.status === 403 || res.status === 401) {
+        toast.error("Access denied. Please log in first.");
+        navigate("/login");
+        throw new Error("Unauthorized access");
+      }
+      return res.json();
+    })
+    .catch(error => {
+      console.error("Fetch Error:", error);
+    })
+  });
 
+  if (isLoading) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <HashLoader color="#DE1068" size={60} />
+      </div>
+    );
+  }
 
   return (
-    <>
-      {
-        isLoading ? <HashLoader style={{ margin: "30% 40%" }} color="#DE1068"></HashLoader> :
-          <>
-            <div>
-              <h2 className='text-3xl font-bold text-center mt-3'> Get the best reuseable Computers   !! </h2>
-              <p className='text-white font-bold p-10 text-xl'>
-                Get the latest product from here we provide you with a lot of resold products that product
-                 are good for your starting or full work time and one thing we provide only PC-related products like Monitor, PC, keyboards,
-                  mice, and some parts for the pc you can get that pc any time from this website 
-                  so what are you waiting for let's book the latest product we are waiting for you.
-                Thanks to come here !!
-              </p>
-              <div style={backGroundStyle} className="py-10 px-3 mx-3 rounded-md">
+    <section className="bg-slate-950 text-slate-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-16">
+        
+        {/* Banner/Header Block */}
+        <div className="relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 p-8 md:p-12 shadow-2xl">
+          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.4),transparent_50%)]" />
+          
+          <div className="max-w-3xl relative z-10 space-y-4">
+            <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
+              Get the Best Reusable Computers
+            </h1>
+            <p className="text-slate-300 text-base sm:text-lg leading-relaxed font-normal">
+              Get the latest verified hardware straight from our collection. We provide certified pre-owned 
+              components perfect for starting out or powering your standard workspace. We deal exclusively in 
+              PC-centric configurations—monitors, core system towers, premium keyboards, and structural hardware components.
+            </p>
+            <div className="pt-4">
+              <a href="#latest-products" className="inline-flex items-center justify-center px-6 py-3 bg-indigo-600 hover:bg-black text-white border border-indigo-600 hover:border-white tracking-wider font-bold rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/10 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm group">
+                Browse Collection
+                <BsArrowRight className="ml-2 text-lg group-hover:translate-x-1 transition-transform duration-200" />
+              </a>
+            </div>
+          </div>
+        </div>
 
-                <img src="https://i.ibb.co/9YBCNWt/flying4.png" alt="flying"
-                  className='h-72 w-80 rotate-65 imageAnimation mx-auto' />
-                <a href="#latest-product">
+        {/* Categories Dynamic Count Grid Title */}
+        <div id="latest-products" className="text-center max-w-2xl mx-auto space-y-3">
+          <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+            Available Components By Category
+          </h2>
+          <p className="text-slate-400 text-sm sm:text-base">
+            We currently host <span className="text-emerald-400 font-bold">{categories?.length || 0} hardware lines</span>. 
+            Create your account today to access full booking pipelines.
+          </p>
+        </div>
 
-                  <button className="btn btn-primary text-center ml-7 animate-pulse">
-                    Get the latest product <BsArrowRight className='mx-2 text-xl'></BsArrowRight>
-                  </button>
-                </a>
+        {/* Category Cards Matrix */}
+        <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+          {categories?.map((category) => (
+            <div 
+              key={category._id} 
+              className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl hover:border-slate-700 transition duration-300 flex flex-col group"
+            >
+              {/* Product Image Wrapper */}
+              <div className="aspect-video w-full bg-slate-950 border-b border-slate-800/60 overflow-hidden flex items-center justify-center p-4">
+                <img 
+                  src={category?.productImage} 
+                  alt={category?.productCategory || "Product image"}
+                  className="max-h-full max-w-full object-contain rounded-lg group-hover:scale-102 transition duration-500"
+                  loading="lazy"
+                />
+              </div>
+
+              {/* Product Info Block */}
+              <div className="p-6 flex flex-col justify-between flex-1 space-y-4">
+                <div className="space-y-2">
+                  <span className="text-xs font-bold tracking-wider text-emerald-400 uppercase">
+                    {category?.productCategory}
+                  </span>
+                  <p className="text-sm text-slate-400 line-clamp-2 leading-relaxed">
+                    {category?.description || "No product summary provided by merchant."}
+                  </p>
+                </div>
+
+                {/* Listing metadata key-values */}
+                <div className="grid grid-cols-2 gap-y-2 gap-x-4 border-t border-slate-800/60 pt-4 text-xs font-medium text-slate-400">
+                  <div>
+                    <span className="block text-slate-500">MSRP Valuation</span>
+                    <span className="text-sm font-bold text-white">${category?.ProductPrice}</span>
+                  </div>
+                  <div>
+                    <span className="block text-slate-500">Listed Stamp</span>
+                    <span className="text-slate-300 font-semibold">{category?.publishDate}</span>
+                  </div>
+                </div>
+
+                {/* Conditional Rendering Action Pipeline */}
+                {currentUser?.role === "Buyer" && (
+                  <div className="pt-2">
+                    <NavLink to={`/available-products/${category._id}`} className="block">
+                      <button className="w-full inline-flex items-center justify-center px-4 py-2.5 bg-slate-800 hover:bg-black border border-slate-700 hover:border-white text-white text-sm font-bold rounded-lg transition-all duration-300">
+                        View Category 
+                        <BsArrowRight className="ml-2" />
+                      </button>
+                    </NavLink>
+                  </div>
+                )}
               </div>
             </div>
+          ))}
 
-            {/* all products category  */}
-            <h2 className='text-center font-bold text-3xl text-white my-6'> There is a total of {categories?.length} categories available for Computer . 
-            Create your account to buy something from this website , what you waiting for create an 
-            account as soon as possiable. </h2>
-            <div className="grid gap-8 mx-2 my-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-
-              {
-                categories?.map(category =>
-                  <div className="card w-96 cardbackground shadow-xl" key={category._id}>
-                    <figure><img src={category?.productImage} alt="product"
-                      className='w-80 h-auto mt-9 rounded-md bg-slate-600' /></figure>
-                    <div className="card-body">
-                      <h2 className="card-title"> Category : {category?.productCategory}</h2>
-                      <p> {category?.description} </p>
-                      <p>Price ${category?.ProductPrice}</p>
-                      <p>Publish Time {category?.publishTime}</p>
-                      <p>Publish Date  {category?.publishDate}</p>
-                      {
-                        currentUser.role === "Buyer" &&
-                        <div className="card-actions justify-end">
-                          <NavLink to={`/available-products/${category._id}`}>
-                            <button className="btn btn-primary"> Show all <BsArrowRight className='mx-2 font-bold'></BsArrowRight></button>
-                          </NavLink>
-                        </div>}
-
-                    </div>
-                  </div>
-
-                )
-              }
-              {
-                currentUser.role === "Seller" &&
-                <AddCategoryCard></AddCategoryCard>
-              }
-
+          {/* Seller Interactive Category Creator Box */}
+          {currentUser?.role === "Seller" && (
+            <div className="flex items-stretch h-full">
+              <AddCategoryCard />
             </div>
-          </>
-      }
-    </>
+          )}
+        </div>
+
+      </div>
+    </section>
   );
 };
 

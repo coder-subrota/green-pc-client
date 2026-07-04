@@ -1,63 +1,141 @@
 import React from "react";
+import { HiOutlineMail, HiOutlinePhone, HiOutlineLocationMarker } from "react-icons/hi";
+
 export default function ContactUs() {
-    return (
-        <>
-            <form action="https://formsubmit.co/itinfobd24@gmail.com" method="post">
-                <div className="py-4 lg:py-8  relative my-5">
-                    <img src="https://cdn.tuk.dev/assets/templates/radian/Back_Image.png" className="h-2/5 lg:h-full w-full lg:w-1/2 absolute inset-0 object-cover object-center xl:block hidden" alt="map" />
-                    <div className="xl:mx-auto xl:container  relative ">
-                        <div className="flex flex-wrap xl:mx-auto xl:container">
-                            <div className="w-full relative lg:w-1/2 xl:mt-10 mb-10 2xl:pr-24 2xl:pl-0 xl:pl-12 pl-0 ">
-                                <img src="https://cdn.tuk.dev/assets/templates/radian/Back_Image.png" className="h-full w-full xl:w-1/2 absolute inset-0 bg-cover bg-center xl:hidden" alt="map" />
-                                <div className="w-full flex flex-col items-start  xl:justify-start  relative z-20 xl:px-0 px-4 xl:py-0 py-4">
-                                    <div className="w-full 2xl:pl-48 xl:pt-1">
-                                        <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-wider text-gray-800">We’re Here</h1>
-                                        <div className="w-full md:w-10/12 mt-3">
-                                            <h2 className="text-gray-800 text-base md:text-lg leading-8 tracking-wider">We believe digital innovation is at the heart of every business success</h2>
-                                            <div className="mt-4 md:mt-8">
-                                                <h2 className="text-sm md:text-base text-indigo-700 font-semibold">Address</h2>
-                                                <h2 className="text-gray-800 text-base md:text-lg leading-8 tracking-wider mt-2">Office #13, NSTP, NUST University H-12 Sector, Joypurhat</h2>
-                                            </div>
-                                            <div className="mt-4 md:mt-8">
-                                                <h2 className="text-sm md:text-base text-indigo-700 font-semibold">Contact</h2>
-                                                <h2 className="text-gray-800 text-base md:text-lg leading-8 tracking-wider mt-2">+8801745124578 (Phone)</h2>
-                                                <h2 className="text-gray-800 text-base md:text-lg leading-8 tracking-wider mt-2">+880195412545 (Cell)</h2>
-                                            </div>
-                                            <div className="mt-4 md:mt-8">
-                                                <h2 className="text-sm md:text-base text-indigo-700 font-semibold">Email</h2>
-                                                <h2 className="text-gray-800 text-base md:text-lg leading-8 tracking-wider mt-2">bdproduct24@gmail.com</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-full lg:w-1/2   xl:pt-10 lg:pl-24">
-                                <div className="flex flex-col items-start xl:justify-start 2xl:justify-end xl:px-0 px-4">
-                                    <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-wider text-indigo-700">Let’s Talk</h1>
-                                    <div className="w-full 2xl:w-8/12 mt-3">
-                                        <h2 className="text-gray-800 text-base md:text-lg leading-8 tracking-wider">For enquiries, please email us using the form below</h2>
-                                        <div className="mt-4 md:mt-8">
-                                            <p className="text-gray-800 text-base font-medium">Name</p>
-                                            <input className="mt-3 text-base border-2 w-11/12 lg:w-full xl:w-10/12 hover:border-indigo-600 focus:border-indigo-600 focus:outline-none border-black py-5 pl-4 text-gray-800" type="text" placeholder="Justin Timberlake" />
-                                        </div>
-                                        <div className="mt-4 md:mt-8">
-                                            <p className="text-gray-800 text-base font-medium">Email Address</p>
-                                            <input className="mt-3 text-base border-2 w-11/12 lg:w-full xl:w-10/12 hover:border-indigo-600 focus:border-indigo-600 focus:outline-none border-black py-5 pl-4 text-gray-800" type="email" placeholder="example@mail.com" />
-                                        </div>
-                                        <div className="mt-4 md:mt-8">
-                                            <p className="text-gray-800 text-base font-medium">Message</p>
-                                            <textarea className="mt-3 text-base border-2 w-11/12 lg:w-full xl:w-10/12 resize-none hover:border-indigo-600 focus:border-indigo-600 focus:outline-none border-black xl:h-40 py-5 pl-4 text-gray-800" type="text" placeholder="Write us something..." defaultValue={""} />
-                                        </div>
-                                        <div className="py-5">
-                                            <button className="py-3 md:py-5 px-5 md:px-10 bg-gray-900 text-white hover:opacity-90 ease-in duration-150 text-sm md:text-lg tracking-wider font-semibold">Send</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  return (
+    <section className="bg-slate-950 text-slate-100 py-16 sm:py-24 relative overflow-hidden">
+      {/* Structural ambient decorative background layers */}
+      <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_top_left,rgba(99,102,241,0.45),transparent_45%)]" />
+      <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_bottom_right,rgba(16,185,129,0.3),transparent_50%)]" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20">
+          
+          {/* Left Block: Information Column */}
+          <div className="lg:col-span-5 space-y-8 flex flex-col justify-center">
+            <div className="space-y-4">
+              <span className="text-xs font-bold tracking-widest text-emerald-400 uppercase">
+                Find Us
+              </span>
+              <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white">
+                We’re Here
+              </h1>
+              <p className="text-slate-400 text-base sm:text-lg leading-relaxed">
+                We believe digital innovation sits comfortably at the heart of every business success layer. Stop by our facility or drop a line anytime.
+              </p>
+            </div>
+
+            <div className="space-y-6 pt-4">
+              {/* Address Row */}
+              <div className="flex items-start space-x-4 group">
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-indigo-400 group-hover:text-emerald-400 group-hover:border-slate-700 transition duration-300">
+                  <HiOutlineLocationMarker className="text-2xl" />
                 </div>
+                <div>
+                  <h3 className="text-sm font-bold tracking-wider uppercase text-slate-400">Address</h3>
+                  <p className="text-base text-slate-200 mt-1 leading-relaxed">
+                    Office #13, NSTP, NUST University<br />H-12 Sector, Joypurhat
+                  </p>
+                </div>
+              </div>
+
+              {/* Contact Numbers Row */}
+              <div className="flex items-start space-x-4 group">
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-indigo-400 group-hover:text-emerald-400 group-hover:border-slate-700 transition duration-300">
+                  <HiOutlinePhone className="text-2xl" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold tracking-wider uppercase text-slate-400">Contact</h3>
+                  <p className="text-base text-slate-200 mt-1 hover:text-indigo-400 transition cursor-pointer">+880 1745-124578 (Phone)</p>
+                  <p className="text-base text-slate-200 hover:text-indigo-400 transition cursor-pointer">+880 1954-125450 (Cell)</p>
+                </div>
+              </div>
+
+              {/* Email Addresses Row */}
+              <div className="flex items-start space-x-4 group">
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-indigo-400 group-hover:text-emerald-400 group-hover:border-slate-700 transition duration-300">
+                  <HiOutlineMail className="text-2xl" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold tracking-wider uppercase text-slate-400">Email</h3>
+                  <a href="mailto:bdproduct24@gmail.com" className="text-base text-slate-200 mt-1 block hover:text-indigo-400 transition">
+                    bdproduct24@gmail.com
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Block: Fully Functional Form Submission Column */}
+          <div className="lg:col-span-7 bg-slate-900 border border-slate-800 p-6 sm:p-10 rounded-2xl shadow-2xl relative">
+            <div className="space-y-4 mb-8">
+              <span className="text-xs font-bold tracking-widest text-indigo-400 uppercase">
+                Get In Touch
+              </span>
+              <h2 className="text-3xl font-black text-white tracking-tight">
+                Let’s Talk
+              </h2>
+              <p className="text-slate-400 text-sm">
+                For commercial enquiries, please message our processing hub down below.
+              </p>
+            </div>
+
+            <form action="https://formsubmit.co/itinfobd24@gmail.com" method="POST" className="space-y-6">
+              
+              {/* Explicit Configuration Flags for FormSubmit integration */}
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+
+              <div>
+                <label htmlFor="form-name" className="block text-sm font-bold text-slate-300 mb-2">Name</label>
+                <input 
+                  id="form-name"
+                  name="name" 
+                  type="text" 
+                  required
+                  placeholder="Justin Timberlake" 
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 placeholder-slate-600 outline-none hover:border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition duration-200 text-base"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="form-email" className="block text-sm font-bold text-slate-300 mb-2">Email Address</label>
+                <input 
+                  id="form-email"
+                  name="email" 
+                  type="email" 
+                  required
+                  placeholder="example@mail.com" 
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 placeholder-slate-600 outline-none hover:border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition duration-200 text-base"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="form-message" className="block text-sm font-bold text-slate-300 mb-2">Message</label>
+                <textarea 
+                  id="form-message"
+                  name="message" 
+                  required
+                  rows="4"
+                  placeholder="Write us something..." 
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 placeholder-slate-600 outline-none hover:border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition duration-200 text-base resize-none"
+                />
+              </div>
+
+              <div className="pt-2">
+                <button 
+                  type="submit" 
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-indigo-600 hover:bg-black text-white border border-indigo-600 hover:border-white tracking-wider font-bold rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/10 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-base"
+                >
+                  Send Message
+                </button>
+              </div>
+
             </form>
-        </>
-    );
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
 }

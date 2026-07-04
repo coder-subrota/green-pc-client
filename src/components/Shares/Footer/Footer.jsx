@@ -1,59 +1,89 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {AiFillInstagram ,AiFillTwitterCircle } from "react-icons/ai" ;
-import {BsGithub ,BsFacebook } from "react-icons/bs";
+import { AiFillInstagram, AiFillTwitterCircle } from "react-icons/ai";
+import { BsGithub, BsFacebook } from "react-icons/bs";
+
 const Footer = () => {
-const background = {
-backgroundImage : `url('https://i.ibb.co/Xz7Vxn7/footer.webp')` ,
-backgroundPosition:"center" ,
-backgroundSize : "cover" ,
-backgroundAttachment :"relative" , 
-}
-    return (
-        <>
-<div className="flex-col md:flex-col hero-overlay" style={background}>
-<footer className="footer text-lg p-10 hero-overlay text-white font-bold">
-  <div>
-   <img src="https://i.ibb.co/5nPLpJK/logo.webp" alt="logo"className='h-14 
-    animate-pulse rounded-md' />
-    <p>PC SHOP ONLY <br/>Providing reliable resell PC  since 2012 </p>
-  </div> 
-  <div>
-    <span className="footer-title">Services</span> 
-    <NavLink to="/" className="link link-hover">PC </NavLink> 
-    <NavLink to="/" className="link link-hover">Monitor</NavLink>
-  </div> 
-  <div>
-    <span className="footer-title">Company</span> 
-    <NavLink to="/" className="link link-hover">About us</NavLink> 
-    <NavLink to="/" className="link link-hover">Contact</NavLink> 
-  </div> 
-  <div>
-    <span className="footer-title">Legal</span> 
-    <NavLink to="/" className="link link-hover">Privacy policy</NavLink> 
-    <NavLink to="/" className="link link-hover">Cookie policy</NavLink>
-  </div>
+  const currentYear = new Date().getFullYear();
 
-<div className="flex-col text-2xl">
-<h2 className='text-end'>Connected with us by this social media </h2>
-  <div className="grid grid-cols-4 mt-11 mx-auto gap-4 text-white shadow-2xl font-bold text-3xl ">
-      <a  href="https://twitter.com/Subrota66881404" target="blank"> <AiFillTwitterCircle> </AiFillTwitterCircle> </a> 
-      <a href="https://github.com/subrota22" target="blank"><BsGithub> </BsGithub></a> 
-      <a href="https://www.facebook.com/subrota112/" target="blank"><BsFacebook></BsFacebook></a>
-      <a href="https://www.instagram.com/fashionbyproduct21/" target="blank"><AiFillInstagram></AiFillInstagram></a>
-    </div>
-</div>
-    
-</footer>
+  return (
+    <footer className="relative bg-slate-950 text-slate-200 overflow-hidden border-t border-slate-900">
+      
+      {/* Decorative High-Tech Background Glow (Replaces fragile background images) */}
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.3),transparent_45%)]" />
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.2),transparent_50%)]" />
 
-<div className='text-2xl font-bold hero-overlay text-white py-2 text-center'>
-  Copy right by Subrota Chandra Sarker (date: 25/11/2022)
-   </div>
-</div>
+      {/* Main Footer Content Grid */}
+      <div className="max-w-7xl mx-auto px-6 py-16 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+        
+        {/* Brand Column */}
+        <div className="lg:col-span-2 space-y-5">
+          <div className="flex items-center space-x-3">
+            {/* Embedded Inline SVG Tech Logo (Will never break or fail to load) */}
+            <div className="bg-gradient-to-tr from-blue-600 to-emerald-500 p-2.5 rounded-xl shadow-lg shadow-blue-500/10">
+              <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <span className="text-2xl font-black tracking-wider text-white bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400">
+             All Green Computers
+            </span>
+          </div>
+          <p className="text-sm font-medium text-slate-400 max-w-sm leading-relaxed">
+            Providing premium grade, reliable, and performance-certified resell computing hardware across the country since 2012.
+          </p>
+        </div>
 
+        {/* Links Column 1: Services */}
+        <div className="flex flex-col space-y-3">
+          <span className="text-xs font-bold tracking-widest text-emerald-400 uppercase">Services</span>
+          <NavLink to="/category/pc" className="text-sm font-semibold hover:text-white transition-colors duration-200">Custom PCs</NavLink>
+          <NavLink to="/category/monitors" className="text-sm font-semibold hover:text-white transition-colors duration-200">Monitors</NavLink>
+        </div>
 
-        </>
-    );
+        {/* Links Column 2: Company */}
+        <div className="flex flex-col space-y-3">
+          <span className="text-xs font-bold tracking-widest text-slate-400 uppercase">Company</span>
+          <NavLink to="/about" className="text-sm font-semibold hover:text-white transition-colors duration-200">About us</NavLink>
+          <NavLink to="/contact" className="text-sm font-semibold hover:text-white transition-colors duration-200">Contact</NavLink>
+        </div>
+
+        {/* Links Column 3: Social & Connection */}
+        <div className="flex flex-col space-y-4">
+          <span className="text-xs font-bold tracking-widest text-slate-400 uppercase">Connect With Us</span>
+          <p className="text-xs font-medium text-slate-400 leading-normal"> Stay updated with our latest daily stock drops.</p>
+          <div className="flex items-center gap-4 text-2xl">
+            <a href="https://twitter.com/Subrota66881404" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-blue-400 transition-colors duration-200">
+              <AiFillTwitterCircle />
+            </a>
+            <a href="https://github.com/subrota22" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors duration-200">
+              <BsGithub />
+            </a>
+            <a href="https://www.facebook.com/subrota112/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-blue-600 transition-colors duration-200">
+              <BsFacebook />
+            </a>
+            <a href="https://www.instagram.com/fashionbyproduct21/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-pink-500 transition-colors duration-200">
+              <AiFillInstagram />
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Bottom Sub-Footer Bar */}
+      <div className="border-t border-slate-900 bg-slate-950/80 backdrop-blur-sm relative z-10">
+        <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500">
+          <p>© {currentYear} . All rights reserved.</p>
+          <p className="text-center sm:text-right">
+            Designed & Engineered by{' '}
+            <span className="text-slate-400 font-bold hover:text-emerald-400 transition-colors cursor-pointer">
+              Subrota Chandra Sarker
+            </span>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;

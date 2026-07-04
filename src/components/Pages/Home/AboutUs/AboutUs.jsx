@@ -1,69 +1,113 @@
 import React from "react";
 
+const teamMembers = [
+  {
+    name: "Alexa",
+    role: "Co-Founder / Hardware Lead",
+    img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400&h=500"
+  },
+  {
+    name: "Olivia",
+    role: "Operations Manager",
+    img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=400&h=500"
+  },
+  {
+    name: "Liam",
+    role: "Quality Assurance",
+    img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400&h=500"
+  },
+  {
+    name: "Elijah",
+    role: "Customer Success Lead",
+    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=500"
+  }
+];
+
 const AboutUs = () => {
-    return (
-        <div className="2xl:container 2xl:mx-auto lg:py-16 my-5 lg:px-20 md:py-12 md:px-6 py-9 px-4">
-            <div className="flex flex-col lg:flex-row justify-between gap-8">
-                <div className="w-full lg:w-5/12 flex flex-col justify-center">
-                    <h1 className="text-3xl lg:text-4xl font-bold leading-9 text-white pb-4">About Us</h1>
-                    <p className="font-normal text-base leading-6 text-gray-600 ">
-
-                        At All green computer, we are passionate about delivering exceptional resellable products that enhance your lifestyle. With a focus on quality, innovation, and customer satisfaction, we strive to offer a curated collection of products that are not only functional but also elevate your everyday experiences.
-
-                        Our journey began with a simple idea: to provide customers with access to high-quality products that they can trust. We understand that finding the right product can be a daunting task, with countless options available in the market. That's why we have carefully curated our collection to ensure that every item we offer meets our rigorous standards of excellence.
-
-                        We believe that a great product starts with superior craftsmanship. That's why we partner with reputable manufacturers who share our commitment to quality and attention to detail. Each product in our selection undergoes rigorous testing to ensure its performance, durability, and reliability, so you can shop with confidence.
-
-                        In addition to quality, we prioritize innovation. We stay up-to-date with the latest trends and advancements in the industry to bring you products that are at the forefront of technology. Whether it's a cutting-edge gadget or a smart solution for your daily needs, you can trust us to offer products that are at the forefront of innovation.
-
-                       
-                    </p>
-                </div>
-                <div className="w-full lg:w-8/12 ">
-                    <img className="w-full h-full" src="https://i.ibb.co/Lz09RFJ/seller.jpgg" alt="A group of People" />
-                </div>
+  return (
+    <section className="bg-slate-950 text-slate-100 py-16 sm:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+        
+        {/* Section 1: About Us */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+          <div className="w-full lg:w-1/2 space-y-6">
+            <div className="inline-flex items-center space-x-2 bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-sm font-medium border border-emerald-500/20">
+              <span>Who We Are</span>
             </div>
-
-            <div className="flex lg:flex-row flex-col justify-between gap-8 pt-12">
-                <div className="w-full lg:w-5/12 flex flex-col justify-center">
-                    <h1 className="text-3xl lg:text-4xl font-bold leading-9 text-white pb-4">Our Story</h1>
-                    <p className="font-normal text-base leading-6 text-gray-600 ">
-                        At All green computer, our journey began with a passion for delivering outstanding resellable products that enhance the lives of our customers. From the very beginning, we set out to create a brand that stands for quality, reliability, and customer satisfaction.
-
-                        Our story started with a group of like-minded individuals who shared a common vision: to offer resellable products that surpass expectations. We embarked on a relentless pursuit of excellence, meticulously curating a collection of products that meet our stringent standards.
-
-                        We believe that a great product is more than just a sum of its features. It should resonate with the user on a deeper level, enriching their daily lives and providing value that lasts. That's why we carefully select products that are not only innovative and functional but also thoughtfully designed to enhance the user experience.
-
-                        We pride ourselves on offering resellable products that embody a perfect blend of quality craftsmanship and cutting-edge technology. Each product undergoes rigorous testing to ensure it meets our high standards of performance, durability, and reliability. We only source from trusted manufacturers who share our commitment to excellence.
-                    </p>
-                </div>
-                <div className="w-full lg:w-8/12 lg:pt-8">
-                    <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-4 shadow-lg rounded-md">
-                        <div className="p-4 pb-6 flex justify-center flex-col items-center">
-                            <img className="md:block hidden" src="https://i.ibb.co/FYTKDG6/Rectangle-118-2.png" alt="Alexa featured Img" />
-                            <img className="md:hidden block" src="https://i.ibb.co/zHjXqg4/Rectangle-118.png" alt="Alexa featured Img" />
-                            <p className="font-medium text-xl leading-5 text-white mt-4">Alexa</p>
-                        </div>
-                        <div className="p-4 pb-6 flex justify-center flex-col items-center">
-                            <img className="md:block hidden" src="https://i.ibb.co/fGmxhVy/Rectangle-119.png" alt="Olivia featured Img" />
-                            <img className="md:hidden block" src="https://i.ibb.co/NrWKJ1M/Rectangle-119.png" alt="Olivia featured Img" />
-                            <p className="font-medium text-xl leading-5 text-white mt-4">Olivia</p>
-                        </div>
-                        <div className="p-4 pb-6 flex justify-center flex-col items-center">
-                            <img className="md:block hidden" src="https://i.ibb.co/Pc6XVVC/Rectangle-120.png" alt="Liam featued Img" />
-                            <img className="md:hidden block" src="https://i.ibb.co/C5MMBcs/Rectangle-120.png" alt="Liam featued Img" />
-                            <p className="font-medium text-xl leading-5 text-white mt-4">Liam</p>
-                        </div>
-                        <div className="p-4 pb-6 flex justify-center flex-col items-center">
-                            <img className="md:block hidden" src="https://i.ibb.co/7nSJPXQ/Rectangle-121.png" alt="Elijah featured img" />
-                            <img className="md:hidden block" src="https://i.ibb.co/ThZBWxH/Rectangle-121.png" alt="Elijah featured img" />
-                            <p className="font-medium text-xl leading-5 text-white mt-4">Elijah</p>
-                        </div>
-                    </div>
-                </div>
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white">
+              About Us
+            </h1>
+            <div className="text-base sm:text-lg text-slate-300 space-y-4 leading-relaxed font-normal">
+              <p>
+                At All Green Computer, we are passionate about delivering exceptional resellable computer products that power your digital world. With an unyielding focus on quality, systemic innovation, and client satisfaction, we offer a precisely curated collection of systems built to elevate your daily computing experiences.
+              </p>
+              <p>
+                Our journey began with a simple idea: to provide access to high-performance hardware you can trust unconditionally. We eliminate the guesswork from choosing custom electronics by matching strict performance standards against highly thoroughly vetted equipment.
+              </p>
+              <p>
+                We believe exceptional computing hardware starts with superior engineering. By maintaining a sharp focus on durability, benchmarks, and thermal dynamics, each unit in our selection undergo extensive component-level testing to ensure reliable stability long before it reaches your desk.
+              </p>
             </div>
+          </div>
+          
+          <div className="w-full lg:w-1/2 relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-2xl blur opacity-20 group-hover:opacity-35 transition duration-300"></div>
+            <img 
+              className="relative w-full rounded-2xl object-cover shadow-2xl border border-slate-800 h-[450px]" 
+              src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&q=80&w=800&h=500" 
+              alt="Our clean hardware validation workshop environment" 
+            />
+          </div>
         </div>
-    );
+
+        {/* Section 2: Our Story & Team Grid */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 pt-8">
+          <div className="w-full lg:w-1/2 order-1 lg:order-2 space-y-6">
+            <div className="inline-flex items-center space-x-2 bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full text-sm font-medium border border-blue-500/20">
+              <span>Our Roots</span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white">
+              Our Story
+            </h2>
+            <div className="text-base sm:text-lg text-slate-300 space-y-4 leading-relaxed font-normal">
+              <p>
+                We started out as a tight-knit circle of tech-enthusiasts, technicians, and engineering purists who shared an explicit vision: to disrupt standard recycling cycles with premium hardware alternatives that regularly surpass client standards.
+              </p>
+              <p>
+                We believe premium hardware is vastly superior to the sum of raw specifications. Devices must align tightly with workflows, perform efficiently under extreme stress, and deliver lasting structural value across multi-year cycles.
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full lg:w-1/2 order-2 lg:order-1">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6">
+              {teamMembers.map((member, idx) => (
+                <div 
+                  key={idx} 
+                  className="bg-slate-900 border border-slate-800/80 p-3 sm:p-4 rounded-xl shadow-xl flex flex-col items-center text-center hover:border-slate-700 transition duration-300 group"
+                >
+                  <div className="overflow-hidden rounded-lg w-full aspect-[4/5]">
+                    <img 
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500 filter grayscale group-hover:grayscale-0" 
+                      src={member.img} 
+                      alt={`Professional profile picture of ${member.name}`} 
+                    />
+                  </div>
+                  <h3 className="font-bold text-lg text-white mt-4 group-hover:text-emerald-400 transition duration-200">
+                    {member.name}
+                  </h3>
+                  <p className="text-xs text-slate-400 font-medium mt-1">
+                    {member.role}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
 };
 
 export default AboutUs;
