@@ -337,9 +337,9 @@ const AddProduct = () => {
                         </div>
 
                         {/* Form Action Button */}
-                        <div className="pt-2" style={{"backgroundColor":"black",'borderRadius':'25px'}}>
+                        <div className="pt-2" style={{"backgroundColor":"black",'borderRadius':'55px'}}>
                             <button 
-                            style={{"backgroundColor":"black",'borderRadius':'25px'}}
+                            style={{"backgroundColor":"black",'borderRadius':'55px'}}
                                 type="submit"
                                 disabled={loading}
                                 className="w-full flex justify-center items-center py-3 px-4 border  border-transparent rounded-lg text-base font-bold text-white bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed transition-all duration-300 shadow-md hover:shadow-lg"

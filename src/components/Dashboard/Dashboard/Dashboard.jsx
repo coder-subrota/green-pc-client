@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { AuthContext, AuthProvider } from '../../../UserContext/UserContext'; 
 import { BeatLoader } from 'react-spinners';
 
 const Dashboard = () => {
   const { currentUser, loading } = useContext(AuthProvider);
+  const location = useLocation();
 
   if (loading) {
     return (
@@ -30,137 +31,158 @@ const Dashboard = () => {
     );
   }
 
+  const userImage = currentUser?.photoURL || currentUser?.image;
+  const userInitials = currentUser?.name?.substring(0, 2) || 'U';
+
   const navLinkStyles = ({ isActive }) => 
     `flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 text-sm ` +
-    `${isActive ? 'bg-primary text-primary-content shadow-md shadow-primary/20' : 'text-base-content/80 hover:bg-base-300 hover:text-base-content'}`;
+    `${isActive ? 'bg-primary text-primary-content shadow-lg shadow-primary/20 scale-[1.02]' : 'text-base-content/70 hover:bg-base-200 hover:text-base-content'}`;
+
+  const WelcomeHome = () => (
+    <div className="flex flex-col items-center justify-center text-center py-16 px-4 animate-in fade-in zoom-in duration-700">
+      <div className="avatar mb-8">
+        <div className="w-32 h-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-4 shadow-2xl">
+          {userImage ? (
+            <img src={userImage} alt={currentUser?.name} />
+          ) : (
+            <div className="bg-neutral text-neutral-content flex items-center justify-center text-4xl font-black uppercase w-full h-full">
+              {userInitials}
+            </div>
+          )}
+        </div>
+      </div>
+      <h2 className="text-4xl font-black text-base-content tracking-tight">Welcome to Home Dashboard</h2>
+      <p className="mt-4 text-base-content/60 max-w-md mx-auto text-lg leading-relaxed">
+        Hello <span className="font-bold text-primary">{currentUser?.name}</span>, you are currently managing the <span className="badge badge-primary badge-outline font-bold px-3">{currentUser?.role}</span> portal.
+      </p>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12 w-full max-w-3xl">
+        <div className="bg-base-100 p-6 rounded-3xl border border-base-300 shadow-sm">
+          <div className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-2">System Status</div>
+          <div className="text-success font-bold flex items-center justify-center gap-2 text-sm">
+            <span className="w-2.5 h-2.5 bg-success rounded-full animate-pulse"></span> ONLINE
+          </div>
+        </div>
+        <div className="bg-base-100 p-6 rounded-3xl border border-base-300 shadow-sm">
+          <div className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-2">Account Role</div>
+          <div className="text-primary font-bold uppercase text-sm">{currentUser?.role}</div>
+        </div>
+        <div className="bg-base-100 p-6 rounded-3xl border border-base-300 shadow-sm">
+          <div className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-2">Identity</div>
+          <div className="text-info font-bold text-sm">VERIFIED</div>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <>
       <Helmet>
-        <title>Dashboard | Portal</title>
+        {/* Fixed: Fallback protection logic added here */}
+        <title>Dashboard | {currentUser?.role || 'Portal'}</title>
       </Helmet>
 
-      <div className="drawer lg:drawer-open min-h-screen bg-base-100 text-base-content">
+      <div className="drawer lg:drawer-open min-h-screen bg-base-100">
         <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
         
-        {/* মেইন কনটেন্ট এরিয়া */}
-        <div className="drawer-content flex flex-col bg-base-200/50">
-          
-          {/* রেসপন্সিভ টপ হেডার বার */}
-          <header className="navbar bg-base-100 border-b border-base-300 px-4 py-2 lg:px-8 sticky top-0 z-10 backdrop-blur bg-opacity-90">
+        <div className="drawer-content flex flex-col bg-base-200/40">
+          {/* Header */}
+          <header className="navbar bg-base-100 border-b border-base-300 px-4 py-3 lg:px-10 sticky top-0 z-10 backdrop-blur-md bg-opacity-95">
             <div className="flex-1">
-              <label htmlFor="dashboard-drawer" className="btn btn-ghost btn-circle lg:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+              <label htmlFor="dashboard-drawer" className="btn btn-ghost btn-circle lg:hidden mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
               </label>
-              <h1 className="text-lg font-bold tracking-tight hidden lg:block">
-                Welcome back, <span className="text-primary">{currentUser?.name || 'User'}</span>
-              </h1>
+              <div className="hidden lg:block">
+                <h1 className="text-sm font-medium text-base-content/50 uppercase tracking-widest">Management Console</h1>
+                <p className="text-xl font-bold capitalize text-base-content">{location.pathname === '/dashboard' ? 'Overview' : location.pathname.split('/').pop().replace('-', ' ')}</p>
+              </div>
             </div>
             
             <div className="flex-none gap-4">
-              <div className="badge badge-primary badge-outline font-semibold uppercase px-3 py-2 text-xs tracking-wider">
-                {currentUser?.role} Portal
+              <div className="hidden md:flex flex-col items-end mr-2">
+                <p className="text-sm font-bold text-base-content leading-tight">{currentUser?.name}</p>
+                <p className="text-[10px] font-medium text-primary uppercase tracking-tighter">{currentUser?.role}</p>
               </div>
-              <div className="avatar placeholder">
-                <div className="bg-neutral text-neutral-content rounded-full w-9">
-                  <span className="text-xs uppercase">{currentUser?.name?.substring(0, 2) || 'U'}</span>
+              <div className="avatar">
+                <div className="w-11 rounded-2xl ring-2 ring-primary/10 ring-offset-2 ring-offset-base-100">
+                  {userImage ? (
+                    <img src={userImage} alt="Profile" />
+                  ) : (
+                    <div className="bg-neutral text-neutral-content flex items-center justify-center w-full h-full text-sm font-bold">
+                      {userInitials}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </header>
 
-          {/* ডাইনামিক পেজ ভিউ কনটেন্ট */}
-          <main className="p-4 md:p-6 lg:p-8 flex-1 w-full max-w-7xl mx-auto">
-            <div className="bg-base-100 p-6 rounded-2xl shadow-sm border border-base-300 min-h-[calc(100vh-140px)]">
-              <Outlet />
+          {/* Main Content */}
+          <main className="p-4 md:p-8 lg:p-10 flex-1 w-full max-w-7xl mx-auto">
+            <div className="bg-base-100 rounded-[2.5rem] shadow-sm border border-base-300 min-h-[calc(100vh-180px)] overflow-hidden">
+              {location.pathname === '/dashboard' || location.pathname === '/dashboard/' ? (
+                <WelcomeHome />
+              ) : (
+                <div className="p-4 md:p-8">
+                    <Outlet />
+                </div>
+              )}
             </div>
           </main>
         </div>
-        
-        {/* সাইডবার সেকশন */}
+    
+        {/* Sidebar */}
         <div className="drawer-side z-20">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-          <div className="w-72 min-h-full bg-base-100 border-r border-base-300 flex flex-col p-4">
+          <div className="w-72 min-h-full bg-base-100 border-r border-base-300 flex flex-col p-6">
             
-            {/* ব্র্যান্ড লোগো এরিয়া (PORTAL ডাবল লেখাটি এখানে সিঙ্গেল করা হয়েছে) */}
-            <div className="px-4 py-5 border-b border-base-300 mb-6">
-              <span className="text-xl font-black tracking-wider text-primary">PORTAL</span>
-            </div>
-
-            {/* মেনু লিংকের তালিকা */}
-            <ul className="space-y-1.5 flex-1">
-              
-              {/* Seller Menu */}
+            {/* Nav Links */}
+            <ul className="menu p-0 space-y-2 flex-1 mt-4">
               {currentUser?.role === "Seller" && (
                 <>
-                  <li>
-                    <NavLink to="/dashboard/my-products" className={navLinkStyles}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
-                      My Products
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/add-product" className={navLinkStyles}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                      Add a Product
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/my-buyers" className={navLinkStyles}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                      My Buyers
-                    </NavLink>
-                  </li>
+                  <li className="text-[11px] uppercase font-black tracking-[0.2em] text-base-content/30 px-4 mb-2">Seller Menu</li>
+                  <li><NavLink to="/dashboard/my-products" className={navLinkStyles}>My Products</NavLink></li>
+                  <li><NavLink to="/dashboard/add-product" className={navLinkStyles}>Add a Product</NavLink></li>
+                  <li><NavLink to="/dashboard/my-buyers" className={navLinkStyles}>My Buyers</NavLink></li>
                 </>
               )}
 
-              {/* Buyer Menu */}
               {currentUser?.role === "Buyer" && (
                 <>
-                  <li>
-                    <NavLink to="/dashboard/my-orders" className={navLinkStyles}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
-                      My Orders
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/wishlist" className={navLinkStyles}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                      Wish List
-                    </NavLink>
-                  </li>
+                  <li className="text-[11px] uppercase font-black tracking-[0.2em] text-base-content/30 px-4 mb-2">Personal</li>
+                  <li><NavLink to="/dashboard/my-orders" className={navLinkStyles}>My Orders</NavLink></li>
+                  <li><NavLink to="/dashboard/wishlist" className={navLinkStyles}>Wish List</NavLink></li>
                 </>
               )}
 
-              {/* Admin Menu */}
               {currentUser?.role === "Admin" && (
                 <>
-                  <li>
-                    <NavLink to="/dashboard/reported-items" className={navLinkStyles}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                      Reported Items
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/all-buyers" className={navLinkStyles}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                      All Buyers
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/all-sellers" className={navLinkStyles}>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                      All Sellers
-                    </NavLink>
-                  </li>
+                  <li className="text-[11px] uppercase font-black tracking-[0.2em] text-base-content/30 px-4 mb-2">Administration</li>
+                  <li><NavLink to="/dashboard/reported-items" className={navLinkStyles}>Reported Items</NavLink></li>
+                  <li><NavLink to="/dashboard/all-buyers" className={navLinkStyles}>All Buyers</NavLink></li>
+                  <li><NavLink to="/dashboard/all-sellers" className={navLinkStyles}>All Sellers</NavLink></li>
                 </>
               )}
-
             </ul>
             
-            <div className="mt-auto border-t border-base-300 pt-4 flex items-center justify-between">
-              <div className="text-xs text-base-content/50">
-                Logged in as <span className="font-semibold block text-base-content/80">{currentUser?.email}</span>
+            {/* Sidebar Bottom Profile Section */}
+            <div className="mt-auto pt-6 border-t border-base-200">
+              <div className="bg-base-200/50 p-4 rounded-3xl flex items-center gap-4">
+                <div className="avatar">
+                  <div className="w-10 rounded-xl">
+                    {userImage ? (
+                      <img src={userImage} alt="User" />
+                    ) : (
+                      <div className="bg-primary text-primary-content flex items-center justify-center w-full h-full text-xs font-black uppercase">
+                        {userInitials}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="overflow-hidden">
+                  <p className="text-xs font-black truncate text-base-content">{currentUser?.name}</p>
+                  <p className="text-[10px] font-bold opacity-40 truncate uppercase">{currentUser?.role}</p>
+                </div>
               </div>
             </div>
 

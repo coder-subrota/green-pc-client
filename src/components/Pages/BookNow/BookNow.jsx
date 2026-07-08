@@ -46,10 +46,10 @@ setCloseModale(true) ;
 
     return (
  <>
-{/* Put this part before </body> tag */}
+
 <input type="checkbox" id="bookingModal" className="modal-toggle" />
-<div className="modal">
-  <div className="modal-box relative">
+<div className="modal bg-blue-700">
+  <div className="modal-box relative bg-cyan-700">
     <label htmlFor="bookingModal" className="btn btn-sm btn-circle btn-error text-white absolute right-2 top-2">✕</label>
     <h3 className="text-lg font-bold">Category : {modalData?.productCategory}</h3>
     <form onSubmit={handleSubmit(onSubmit)} className="card-body text-info">

@@ -109,7 +109,7 @@ const Login = () => {
       <div className="hero min-h-96 my-8">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div>
-            <img src="https://i.ibb.co/WKtVW7D/login.png"
+            <img src="https://i.ibb.co.com/gZbBnjpC/Protection-Vectors-Download-Free-High-Quality-Vectors-Magnific-formerly-Freepik.jpg"
               alt="login" className='w-full bg-base-100  h-screen rounded-md hover:translate-y-4   transition duration-1000' />
           </div>
           <div className="card flex-shrink-0 w-full max-w-lg  shadow-2xl bg-base-100 

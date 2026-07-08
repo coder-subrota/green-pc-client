@@ -1,7 +1,6 @@
-
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
@@ -9,237 +8,212 @@ import { toast } from 'react-toastify';
 import { AuthProvider } from '../../../UserContext/UserContext';
 import BookNow from '../BookNow/BookNow';
 import { TiTick } from "react-icons/ti";
+import { HiOutlineLocationMarker, HiOutlineCalendar, HiOutlineMail, HiOutlinePhone, HiOutlineFlag, HiHeart, HiOutlineHeart } from "react-icons/hi";
+
 const AllAvailableProducts = () => {
     const products = useLoaderData();
     const categoryId = products[0]?.categoryId;
     const [bookingData, setBookingData] = useState({});
     const [closeModal, setCloseModale] = useState(true);
-    const { user, currentUser } = useContext(AuthProvider);
+    const { currentUser } = useContext(AuthProvider);
     const [sellerInfo, setSellerInfo] = useState([]);
     const navigate = useNavigate();
 
-    const handleBookingData = (books) => {
-        setBookingData(books);
-        setCloseModale(false);
-    }
-
     const { data: productItems = [], isLoading, refetch } = useQuery({
-        queryKey: ['sellers'],
-        queryFn: () =>
-            fetch(`https://green-pc-server-1b9h.vercel.app/availAbleProducts/${categoryId}`, {
+        queryKey: ['available-products', categoryId],
+        queryFn: async () => {
+            const res = await fetch(`https://green-pc-server-1b9h.vercel.app/availAbleProducts/${categoryId}`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("pc-shop-only")}`
                 }
-            })
-                .then(res => {
-                    if (res.status === 401 || res.status === 403) {
-                        return navigate("/");
-                    }
-                    return res.json()
-                }
-                )
-                .then(data => data)
-    })
-
-    //send data in headers by axios
-    axios.interceptors.request.use(
-        config => {
-            config.headers.authorization = `Bearer ${localStorage.getItem("pc-shop-only")}`;
-            return config;
+            });
+            if (res.status === 401 || res.status === 403) {
+                navigate("/");
+                return [];
+            }
+            return res.json();
         }
-        ,
-        error => {
-            return Promise.reject(error);
-        }
-    );
+    });
 
-    React.useEffect(() => {
-        //get all users 
+    useEffect(() => {
         axios.get("https://green-pc-server-1b9h.vercel.app/users")
             .then(res => setSellerInfo(res.data))
-            .then(error => toast.error(error.message));
+            .catch(error => toast.error(error.message));
     }, []);
 
-    const handleWishList = (productItem) => {
-        if (!user?.email) return;
+    const handleBookingData = (product) => {
+        setBookingData(product);
+        setCloseModale(false);
+    };
 
+    const handleWishList = (productItem) => {
+        if (!currentUser?.email) return;
         const wishtListInfo = {
-            buyerEmail: user?.email,
+            buyerEmail: currentUser?.email,
             productId: productItem._id,
-        }
+        };
         axios.put(`https://green-pc-server-1b9h.vercel.app/wishList/`, wishtListInfo)
             .then(res => {
-                if (res.status === 403 || res.status === 401) {
-                    return navigate("/")
-                }
+                if (res.status === 403 || res.status === 401) return navigate("/");
                 if (res.data.modifiedCount > 0) {
-                    toast.success(productItem?.productName + "  sucessfully added to wish list")
-                    return refetch();
+                    toast.success(`${productItem?.productName} added to wishlist`);
+                    refetch();
                 }
-            }).catch(error => toast.error(error.message))
-    }
-
-    if (currentUser.role !== "Buyer") {
-        return;
-    }
+            }).catch(error => toast.error(error.message));
+    };
 
     const handleReport = (product) => {
         axios.put(`https://green-pc-server-1b9h.vercel.app/repot/${product._id}`)
             .then(res => {
                 if (res.data.modifiedCount > 0) {
-
-                    toast.success("You are repoted successfully for " + product.productName)
-                    return refetch();
+                    toast.success(`Reported ${product.productName} successfully`);
+                    refetch();
                 }
-            })
-            .then(error => toast.error(error.message));
-    }
+            }).catch(error => toast.error(error.message));
+    };
+
     if (isLoading) {
         return (
-            <>
-                <HashLoader style={{ margin: "30% 40%" }} color="#DE1068"></HashLoader>
-            </>
-        )
+            <div className="flex justify-center items-center min-h-[60vh]">
+                <HashLoader color="#4A90E2" size={50} />
+            </div>
+        );
     }
+
+    if (currentUser?.role !== "Buyer") {
+        return (
+            <div className="text-center py-20 bg-base-200 rounded-3xl m-10 border border-dashed border-base-300">
+                <h2 className="text-2xl font-bold opacity-50">Access Restricted to Buyers Only</h2>
+            </div>
+        );
+    }
+
     return (
-        <>
+        <div className="max-w-7xl mx-auto px-4 py-10">
             <Helmet>
-                <title> Available products </title>
+                <title>Products | {productItems[0]?.productCategory || 'Available'}</title>
             </Helmet>
-            <h2 className='text-center text-white font-bold text-2xl'>Total
-                <span className='mx-3 text-success'> {productItems?.length}</span> available  products for  :
-                <span className='mx-3 text-success'>  {productItems[0]?.productCategory ? productItems[0]?.productCategory : "this category"}  </span> </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-7 my-10 mx-auto lg:grid-cols-3">
-                {
-                    productItems.map(product =>
-                        <div className="card w-96 bg-dark text-white hover:translate-y-8  transition duration-1000 shadow-xl" key={product._id}>
-                            <figure className="px-10 pt-10">
-                                <img src={product?.productImage} alt="product"
-                                    className="rounded-xl h-96 w-full " />
-                            </figure>
-                            <div className="card-body">
-                                <h2 className="card-title">{product?.productName}</h2>
-                                <p> {product?.description?.length > 120 ?
-                                    product?.description.slice(0, 138) + "..." :
-                                    product?.description} </p>
-                                <p> Resell price :  <strong>${product?.ProductPrice}</strong></p>
-                                <p> OrginalPrice price :  <strong>${product?.orginalPrice}</strong></p>
-                                <p>Seller phone number : {product?.phoneNumber}</p>
-                                <p>Seller email: {product?.sellerEmail}</p>
-                                <p>Product category : {product?.productCategory}</p>
-                                <p>Publish Date , Time  : {product?.publishTime}</p>
-                                <p>Purchase year : {product?.purchaseYear}</p>
-                                <p>Seller location : {product?.location}</p>
-                                <p>Seller name : {product?.sellerName}</p>
 
-                                <div className="flex justify-start">
-                                    <div>
-                                        <p className='mt-4 mx-4  '>Seller Profile Image : </p>
-                                    </div>
-                                    <div>
-                                        <img src={product.sellerProfile} alt={product.sellerName}
-                                            className="h-14 w-14  rounded-full border-2 border-primary" />
-                                    </div>
-
-                                </div>
-
-                                <div className="flex my-2">
-                                    <div>  Seller status :  </div>
-                                    {
-                                        sellerInfo.map(seller => seller.email === product.sellerEmail
-                                            && seller?.isSellerVerified &&
-                                            <div className="flex" key={seller._id} >
-                                                <div className='mx-2'>   verified  </div>
-                                                <div>
-                                                    <TiTick className='text-white
-                                                   text-2xl bg-blue-800   rounded-full'></TiTick>
-                                                </div>
-
-                                            </div>
-                                        )
-                                    }
-                                    {
-                                        sellerInfo.map(seller => seller.email === product.sellerEmail &&
-
-                                            !seller?.isSellerVerified &&
-                                            <div className="flex" key={seller._id} >
-                                                <div className='mx-2'> Unverified  </div>
-
-                                            </div>
-                                        )
-                                    }
-
-                                </div>
-                                {
-                                    currentUser.role === "Buyer" &&
-                                    <div className="card-actions">
-                                        {product?.product !== "sold" ?
-                                            <label htmlFor="bookingModal" onClick={() => handleBookingData(product)}
-                                                className="btn btn-primary btn-sm">
-                                                Book now
-                                            </label> : product?.product === "sold" && refetch() &&
-                                            <button className="btn btn-success text-white btn-sm ">
-                                                Booked   </button>
-                                        }
-                                        {
-                                            product?.product !== "sold" &&
-                                            <>
-
-                                                {
-
-                                                    product.wishList === true ? <button className="btn  btn-sm 
-                                              btn-success  inline-block text-white">
-                                                        Wish list added </button> :
-
-                                                        <button className="btn btn-primary btn-sm  inline-block"
-                                                            onClick={() => handleWishList(product)}>
-                                                            Add to wish list</button>
-                                                }
-
-                                            </>
-                                        }
-                                        {
-
-                                            product?.productIsRepote === "repoted" ?
-                                                <button className="btn btn-success text-white btn-sm ">
-                                                    Repoted   </button> :
-                                                <button className="btn btn-primary text-white btn-sm "
-                                                    onClick={() => handleReport(product)}>
-                                                    Repot   </button>
-
-                                        }
-                                        {
-                                            product?.product === "sold" && refetch() &&
-                                            <button className="btn text-white btn-success btn-sm animate-pulse">
-                                                Already Sold   </button>
-
-
-                                        }
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    )
-                }
+            <div className="text-center mb-12">
+                <span className="badge badge-primary badge-outline font-bold mb-2 uppercase tracking-widest px-4 py-3">
+                    {productItems[0]?.productCategory || "Category"}
+                </span>
+                <h2 className="text-4xl font-black text-base-content mt-2">
+                    Available <span className="text-primary">{productItems?.length}</span> Products
+                </h2>
+                <div className="w-20 h-1.5 bg-primary mx-auto mt-4 rounded-full"></div>
             </div>
 
-            {
-                closeModal === false &&
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {productItems.map(product => {
+                    const seller = sellerInfo.find(s => s.email === product.sellerEmail);
+                    const isVerified = seller?.isSellerVerified;
+
+                    return (
+                        <div key={product._id} className="group bg-base-100 rounded-[2.5rem] overflow-hidden border border-base-200 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                            <figure className="relative h-72 overflow-hidden">
+                                <img src={product?.productImage} alt={product?.productName} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                <div className="absolute top-4 left-4">
+                                    <div className="badge badge-neutral bg-black/60 backdrop-blur-md border-none text-white font-bold px-3 py-3">
+                                        {product?.productCategory}
+                                    </div>
+                                </div>
+                                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                    <div className="flex justify-between items-end">
+                                        <div>
+                                            <p className="text-white/70 text-xs font-bold uppercase tracking-tighter">Resell Price</p>
+                                            <p className="text-white text-3xl font-black">${product?.ProductPrice}</p>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="text-white/50 text-[10px] line-through font-bold">Original: ${product?.orginalPrice}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </figure>
+
+                            <div className="p-6">
+                                <div className="flex justify-between items-start mb-3">
+                                    <h2 className="text-xl font-bold text-base-content leading-tight h-14 overflow-hidden">{product?.productName}</h2>
+                                    <button 
+                                        onClick={() => handleWishList(product)}
+                                        className={`btn btn-circle btn-sm ${product.wishList ? 'btn-success' : 'btn-ghost bg-base-200'} border-none`}
+                                    >
+                                        {product.wishList ? <HiHeart className="text-lg text-white" /> : <HiOutlineHeart className="text-lg" />}
+                                    </button>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-3 mb-6">
+                                    <div className="flex items-center gap-2 text-xs font-medium opacity-70">
+                                        <HiOutlineLocationMarker className="text-primary text-sm" /> {product?.location}
+                                    </div>
+                                    <div className="flex items-center gap-2 text-xs font-medium opacity-70">
+                                        <HiOutlineCalendar className="text-primary text-sm" /> {product?.purchaseYear}
+                                    </div>
+                                </div>
+
+                                <div className="bg-base-200/50 rounded-2xl p-4 mb-6">
+                                    <div className="flex items-center gap-3">
+                                        <div className="relative">
+                                            <img src={product.sellerProfile} alt={product.sellerName} className="h-10 w-10 rounded-full object-cover ring-2 ring-primary ring-offset-2 ring-offset-base-100" />
+                                            {isVerified && (
+                                                <div className="absolute -right-1 -top-1 bg-blue-600 text-white rounded-full p-0.5">
+                                                    <TiTick size={12} />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="overflow-hidden">
+                                            <p className="text-sm font-black truncate">{product?.sellerName}</p>
+                                            <p className="text-[10px] font-bold opacity-50 uppercase tracking-tighter flex items-center gap-1">
+                                                {isVerified ? 'Verified Seller' : 'Unverified Seller'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col gap-2">
+                                    {product?.product !== "sold" ? (
+                                        <label 
+                                            htmlFor="bookingModal" 
+                                            onClick={() => handleBookingData(product)}
+                                            className="btn btn-primary rounded-xl font-bold shadow-lg shadow-primary/20"
+                                        >
+                                            Book Now
+                                        </label>
+                                    ) : (
+                                        <button className="btn btn-disabled bg-success/20 text-success rounded-xl border-none">Sold Out</button>
+                                    )}
+                                    
+                                    <button 
+                                        onClick={() => handleReport(product)}
+                                        disabled={product?.productIsRepote === "repoted"}
+                                        className={`btn btn-sm btn-ghost rounded-xl font-bold gap-2 ${product?.productIsRepote === "repoted" ? 'text-success' : 'text-error hover:bg-error/10'}`}
+                                    >
+                                        <HiOutlineFlag /> {product?.productIsRepote === "repoted" ? 'Already Reported' : 'Report Product'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+
+            {productItems?.length === 0 && (
+                <div className="text-center py-20 px-6 bg-base-200 rounded-[3rem] border border-base-300 max-w-2xl mx-auto mt-10">
+                    <div className="text-6xl mb-4">⌛</div>
+                    <h2 className="text-2xl font-black mb-2 text-base-content">No Products Found!</h2>
+                    <p className="opacity-60 font-medium">New resell items will be available soon. Check back in 24 hours.</p>
+                    <button onClick={() => navigate('/')} className="btn btn-primary btn-outline mt-8 rounded-2xl px-10">Return Home</button>
+                </div>
+            )}
+
+            {!closeModal && (
                 <BookNow
                     modalData={bookingData}
                     setCloseModale={setCloseModale}
-                ></BookNow>
-            }
-
-            {
-                products?.length === 0 &&
-                <div className='my-20 bg-gray-600 py-28 text-white text-3xl p-6'>
-                    <h2> New resell product will be available within 24 hours untill that time go to the home page  </h2>
-                </div>
-            }
-        </>
+                />
+            )}
+        </div>
     );
-
 };
 
 export default AllAvailableProducts;

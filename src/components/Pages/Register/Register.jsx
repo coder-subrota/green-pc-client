@@ -148,7 +148,7 @@ return (
 <div className="hero min-h-96 my-8">
 <div className="hero-content flex-col lg:flex-row">
   <div className=''>
-   <img src="https://i.ibb.co/0qMwtG6/register.png"
+   <img src="https://i.ibb.co.com/0RKvPbkR/wallpaper.jpg"
     alt="register" className='w-full bg-base-100  rounded-lg hover:translate-y-4 transition duration-1000'
     style={{height:"840px"}}/>
   </div>
