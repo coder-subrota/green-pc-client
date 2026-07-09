@@ -1,101 +1,159 @@
-import React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthProvider } from '../../../UserContext/UserContext';
 import { toast } from 'react-toastify';
-import {HiBars3} from "react-icons/hi2" ;
+import { HiBars3 } from "react-icons/hi2";
+import { HiOutlineLogout, HiOutlineUserCircle } from 'react-icons/hi';
+
 const Navbar = () => {
-    const { logOutUser, setUser , user } = useContext(AuthProvider);
+  const { logOutUser, setUser, user } = useContext(AuthProvider);
 
-        //handle log out user
-        const handleLogOutUser = () => {
-            logOutUser()
-                .then(() => {
-                    toast.info("Your profile has been log out successfully !! ");
-                    setUser({});
-                })
-        }
+  // Handle log out user safely with error fallback handling
+  const handleLogOutUser = () => {
+    logOutUser()
+      .then(() => {
+        toast.info("Logged out successfully!");
+        setUser({});
+      })
+      .catch((error) => {
+        toast.error(error.message || "Something went wrong while logging out");
+      });
+  };
 
-    const menueItems = <>
-        <li><NavLink to="/"> Home </NavLink></li>
-       { 
-    !user.uid &&  <>
-       <li><NavLink to="/register"> Register </NavLink></li>
-        <li><NavLink to="/login">Login </NavLink></li>
-   </>
-        }
-          <li><NavLink to="/blogs"> Blogs </NavLink></li>
-         {
-            user.uid &&   <li><NavLink to="/dashboard"> Dashboard </NavLink></li>
-         }
-    
-    </>
-
-
-    return (
+  // Centralized Navigation Links Architecture
+  const menuItems = (
+    <>
+      <li>
+        <NavLink to="/" className={({ isActive }) => isActive ? "text-success font-semibold" : ""}>
+          Home
+        </NavLink>
+      </li>
+      {!user?.uid && (
         <>
-            <div className="navbar cardbackground mb-4 py-8">
-                <div className="navbar-start">
-                    <div className="dropdown">
-                        <label tabIndex={0} className="btn btn-ghost lg:hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-                        </label>
-                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow cardbackground rounded-box w-52">
-                            {menueItems}
-                        </ul>
-                      
-                    </div>
-                    <NavLink to="/" className="normal-case text-xl flex ">
-                      <img src="https://i.ibb.co/5nPLpJK/logo.webp" alt="logo" 
-                      className='h-10'/>
-                    <span className='text-success uppercase animate-pulse hidden md:block mx-6'>  All Green computers </span>
-                    </NavLink>
-                </div>
-                <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal  p-0">
-
-                        {menueItems}
-         
-                    </ul>
-                   {
-                    user.uid &&
-                    <button className='btn btn-error ml-4 mr-4 mx-auto btn-md rounded-lg text-white my-2'onClick={handleLogOutUser}>Logout</button>
-                   }
-                </div>
-                <div className="navbar-end">
-       
-                     {  user.uid && <div className="dropdown dropdown-end">
-                            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                                <div className="w-14">
-                                    <img src={user.photoURL ? user.photoURL : "https://i.ibb.co/Pwh4tt1/noimgs.png"} alt='user profile' className='rounded-full'/>
-                                </div>
-                            </label>
-                            <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow cardbackground rounded-box w-52">
-                                <li>
-                                    <NavLink to="/profile" className="justify-between">
-                                        Profile
-                                        <span className="badge">New</span>
-                                    </NavLink>
-                                </li>
-                                <li><NavLink className="my-2">Settings</NavLink></li>
-                                <li><button className='btn btn-error text-white my-2'
-                                    onClick={handleLogOutUser}>Logout</button></li>
-                            </ul>
-                        </div>}
-                        
-                </div>
-
-                <label htmlFor="dashboard" 
-            className="drawer-button lg:hidden text-2xl font-bold mx-2 
-            hover:cursor-pointer">
-                <HiBars3></HiBars3>
-            </label>
-  
-            </div>
-
-        
+          <li>
+            <NavLink to="/register" className={({ isActive }) => isActive ? "text-success font-semibold" : ""}>
+              Register
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/login" className={({ isActive }) => isActive ? "text-success font-semibold" : ""}>
+              Login
+            </NavLink>
+          </li>
         </>
-    );
+      )}
+      <li>
+        <NavLink to="/blogs" className={({ isActive }) => isActive ? "text-success font-semibold" : ""}>
+          Blogs
+        </NavLink>
+      </li>
+      {user?.uid && (
+        <li>
+          <NavLink to="/dashboard" className={({ isActive }) => isActive ? "text-success font-semibold" : ""}>
+            Dashboard
+          </NavLink>
+        </li>
+      )}
+    </>
+  );
+
+  return (
+    <header className="navbar cardbackground sticky top-0 z-50 px-4 md:px-8 py-3 shadow-md border-b border-base-200/10 backdrop-blur-md">
+      {/* Navbar Start Section */}
+      <div className="navbar-start">
+        {/* Mobile Dropdown Viewports */}
+        <div className="dropdown">
+          <label tabIndex={0} className="btn btn-ghost p-1 lg:hidden text-2xl mr-2" aria-label="Open Menu">
+            <HiBars3 />
+          </label>
+          <ul 
+            tabIndex={0} 
+            className="menu menu-sm dropdown-content mt-3 p-3 shadow-xl cardbackground border border-base-200 rounded-box w-56 space-y-1"
+          >
+            {menuItems}
+            {user?.uid && (
+              <>
+                <div className="divider opacity-20 my-1"></div>
+                <li>
+                  <button onClick={handleLogOutUser} className="btn btn-error btn-sm text-white w-full flex items-center justify-center gap-2">
+                    <HiOutlineLogout /> Logout
+                  </button>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
+
+        {/* Corporate Brand Identity Logo */}
+        <NavLink to="/" className="flex items-center gap-3 tracking-wide normal-case text-lg font-bold">
+          <img 
+            src="https://i.ibb.co/5nPLpJK/logo.webp" 
+            alt="All Green Computers Logo" 
+            className="h-9 w-auto object-contain"
+          />
+          <span className="text-success font-extrabold uppercase tracking-wider hidden md:inline-block">
+            All Green Computers
+          </span>
+        </NavLink>
+      </div>
+
+      {/* Navbar Center Section (Desktop Viewports) */}
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal gap-2 px-1 text-sm font-medium">
+          {menuItems}
+        </ul>
+      </div>
+
+      {/* Navbar End Section */}
+      <div className="navbar-end gap-3">
+        {user?.uid ? (
+          <div className="dropdown dropdown-end">
+            <label tabIndex={0} className="btn btn-ghost btn-circle avatar online border-2 border-primary/20">
+              <div className="w-10 rounded-full">
+                <img 
+                  src={user?.photoURL || "https://i.ibb.co/Pwh4tt1/noimgs.png"} 
+                  alt="Authenticated user avatar" 
+                />
+              </div>
+            </label>
+            <ul 
+              tabIndex={0} 
+              className="menu menu-sm dropdown-content mt-3 p-3 shadow-xl cardbackground border border-base-200 rounded-box w-56 space-y-2"
+            >
+              <li>
+                <NavLink to="/profile" className="flex items-center justify-between py-2.5">
+                  <span className="flex items-center gap-2"><HiOutlineUserCircle className="text-lg" /> Profile</span>
+                  
+                </NavLink>
+              </li>
+              <div className="divider opacity-10"></div>
+              <li>
+                <button 
+                  className="btn btn-error btn-sm text-white w-full flex items-center justify-center gap-2"
+                  onClick={handleLogOutUser}
+                >
+                  <HiOutlineLogout className="text-base" /> Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <div className="hidden lg:flex items-center gap-2">
+            <NavLink to="/login" className="btn btn-ghost btn-sm">Sign In</NavLink>
+            <NavLink to="/register" className="btn btn-primary btn-sm px-4">Get Started</NavLink>
+          </div>
+        )}
+
+        {/* Mobile Responsive Structural Hook for Optional Drawer Toggles */}
+        <label 
+          htmlFor="dashboard" 
+          className="drawer-button lg:hidden text-2xl font-bold ml-1 cursor-pointer opacity-80 hover:opacity-100 transition-opacity"
+        >
+          <HiBars3 />
+        </label>
+      </div>
+    </header>
+  );
 };
 
 export default Navbar;

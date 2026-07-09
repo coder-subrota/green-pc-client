@@ -12,6 +12,7 @@ import {
     IoMegaphoneOutline, IoCheckmarkDoneOutline, IoTimeOutline, 
     IoCalendarOutline, IoLocationOutline, IoLayersOutline, IoAddCircleOutline 
 } from 'react-icons/io5';
+import { FiEdit3 } from 'react-icons/fi';
 
 const MyProducts = () => {
     const { user } = useContext(AuthProvider);
@@ -140,6 +141,15 @@ const MyProducts = () => {
                                             className="p-1.5 text-slate-400 hover:text-red-500 bg-slate-50 hover:bg-red-50 rounded-xl transition-colors cursor-pointer"
                                         >
                                             <BsTrash className="text-lg" />
+                                        </label>
+
+                                             {/* Delete Icon */}
+                                        <label 
+                                            htmlFor="deleteConfirm" 
+                                            onClick={() => handleDeleteButton(product)}
+                                            className="p-1.5 text-slate-400 hover:text-cyan-500 bg-slate-50 hover:bg-gray-700 rounded-xl transition-colors cursor-pointer"
+                                        >
+                                            <FiEdit3 className="text-lg" />
                                         </label>
                                     </div>
                                     <p className="text-slate-500 text-xs mt-1 line-clamp-2">{product.description}</p>

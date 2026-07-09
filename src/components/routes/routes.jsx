@@ -106,6 +106,7 @@ export const routes = createBrowserRouter([
                 path: "/dashboard/add-product", element: 
                 <SellerPrivateRouter><AddProuduct></AddProuduct></SellerPrivateRouter>
             },
+
             {
                 path: "/dashboard/my-buyers", element: <SellerPrivateRouter>
                     <MyBuyers></MyBuyers>

@@ -147,9 +147,7 @@ const AllSellers = () => {
                     </td>
                     <td className="py-4 px-6 text-center">
                       <div className="flex items-center justify-center gap-2">
-                        <button className="p-2 text-slate-400 hover:text-emerald-600 bg-slate-50 hover:bg-emerald-50 rounded-xl transition-colors">
-                          <FiEdit className="text-base" />
-                        </button>
+                  
                         <label 
                           htmlFor="deleteConfirm" 
                           onClick={() => triggerDeleteModal(seller)}
