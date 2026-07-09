@@ -8,7 +8,6 @@ import UserPrivateRouter from "../../PrivaterRouters/UserPrivateRouter/UserPriva
 import AddProuduct from "../Dashboard/AddProduct/AddProuduct";
 import AllBuyers from "../Dashboard/AllBuyers/AllBuyers";
 import AllSellers from "../Dashboard/AllSellers/AllSellers";
-// import DashboardHome from "../Dashboard/DashboardHome/DashboardHome";
 import MyBuyers from "../Dashboard/MyBuyers/MyBuyers";
 import MyOrders from "../Dashboard/MyOrders/MyOrders";
 import MyProducts from "../Dashboard/MyProducts/MyProducts";
@@ -112,11 +111,6 @@ export const routes = createBrowserRouter([
                     <MyBuyers></MyBuyers>
                 </SellerPrivateRouter>
             },
-
-            {
-                path: "/dashboard/repoted-items", element: 
-                <AdminPrivateRouter><RepotedItems></RepotedItems></AdminPrivateRouter>
-            },
           
             {
                 path: "/dashboard/all-buyers", element: 
@@ -131,12 +125,16 @@ export const routes = createBrowserRouter([
                 <BuyerPrivateRouter> <MyOrders></MyOrders> </BuyerPrivateRouter> 
             },
             {
-             path : "/dashboard/wishtList" , element: 
+             path : "/dashboard/wishlist" , element: 
              <BuyerPrivateRouter><WishList></WishList></BuyerPrivateRouter>
             } ,
             {
+                  path:"/dashboard/reported-products",element: <> <AdminPrivateRouter><RepotedItems></RepotedItems> </AdminPrivateRouter> </>
+            },
+            {
                 path: "*", element: <ErrorPage></ErrorPage>
-            }
+            },
+            
 
         ]
     }

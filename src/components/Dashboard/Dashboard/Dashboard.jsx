@@ -158,7 +158,7 @@ const Dashboard = () => {
               {currentUser?.role === "Admin" && (
                 <>
                   <li className="text-[11px] uppercase font-black tracking-[0.2em] text-base-content/30 px-4 mb-2">Administration</li>
-                  <li><NavLink to="/dashboard/reported-items" className={navLinkStyles}>Reported Items</NavLink></li>
+                  <li><NavLink to="/dashboard/reported-products" className={navLinkStyles}>Reported Items</NavLink></li>
                   <li><NavLink to="/dashboard/all-buyers" className={navLinkStyles}>All Buyers</NavLink></li>
                   <li><NavLink to="/dashboard/all-sellers" className={navLinkStyles}>All Sellers</NavLink></li>
                 </>

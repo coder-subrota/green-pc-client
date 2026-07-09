@@ -7,11 +7,7 @@ const DeleteConformation = ({handleDelete , title  , text ,  modalData , close }
 {/* Put this part before </body> tag */}
 <input type="checkbox" id="deleteConfirm" className="modal-toggle" />
 <div className="modal">
-  <div className="modal-box">
- <div className="flex justify-between my-2">
- <h2 className='text-start text-4xl'> 💐💐 </h2>
-  <h2 className='text-end text-4xl'>🌹🌹</h2>
- </div>
+  <div className="modal-box" style={{backgroundColor:"red"}}>
     <h3 className="font-bold text-lg text-error ">  {title}  </h3>
   
     <p className="py-4 text-error ">{text}</p>

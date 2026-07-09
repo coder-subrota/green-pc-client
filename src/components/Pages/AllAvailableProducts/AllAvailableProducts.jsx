@@ -8,17 +8,18 @@ import { toast } from 'react-toastify';
 import { AuthProvider } from '../../../UserContext/UserContext';
 import BookNow from '../BookNow/BookNow';
 import { TiTick } from "react-icons/ti";
-import { HiOutlineLocationMarker, HiOutlineCalendar, HiOutlineMail, HiOutlinePhone, HiOutlineFlag, HiHeart, HiOutlineHeart } from "react-icons/hi";
+import { HiOutlineLocationMarker, HiOutlineCalendar, HiOutlineFlag, HiHeart, HiOutlineHeart } from "react-icons/hi";
 
 const AllAvailableProducts = () => {
     const products = useLoaderData();
     const categoryId = products[0]?.categoryId;
     const [bookingData, setBookingData] = useState({});
-    const [closeModal, setCloseModale] = useState(true);
+    const [closeModal, setCloseModale] = useState(true); // true means modal is hidden
     const { currentUser } = useContext(AuthProvider);
     const [sellerInfo, setSellerInfo] = useState([]);
     const navigate = useNavigate();
 
+    // Fetch Products
     const { data: productItems = [], isLoading, refetch } = useQuery({
         queryKey: ['available-products', categoryId],
         queryFn: async () => {
@@ -35,19 +36,21 @@ const AllAvailableProducts = () => {
         }
     });
 
+    // Fetch Seller info to check verification
     useEffect(() => {
         axios.get("https://green-pc-server-1b9h.vercel.app/users")
             .then(res => setSellerInfo(res.data))
             .catch(error => toast.error(error.message));
     }, []);
 
+    // FIX: Define handleBookingData correctly
     const handleBookingData = (product) => {
         setBookingData(product);
-        setCloseModale(false);
+        setCloseModale(false); // Open the modal
     };
 
     const handleWishList = (productItem) => {
-        if (!currentUser?.email) return;
+        if (!currentUser?.email) return toast.warning("Please login first");
         const wishtListInfo = {
             buyerEmail: currentUser?.email,
             productId: productItem._id,
@@ -108,9 +111,28 @@ const AllAvailableProducts = () => {
                 {productItems.map(product => {
                     const seller = sellerInfo.find(s => s.email === product.sellerEmail);
                     const isVerified = seller?.isSellerVerified;
+                    // Check if product is sold or paid
+                    const isSold = product?.product === "sold" || product?.paid === true;
 
                     return (
-                        <div key={product._id} className="group bg-base-100 rounded-[2.5rem] overflow-hidden border border-base-200 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                        <div key={product._id} className="group bg-base-100 rounded-[2.5rem] overflow-hidden border border-base-200 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative">
+                            
+                            {/* --- Wishlist Icon Logic --- */}
+                            {!isSold && (
+                                <div className="absolute top-4 right-4 z-10">
+                                    <button 
+                                        onClick={() => handleWishList(product)}
+                                        className={`btn btn-circle btn-sm border-none shadow-md transition-all ${
+                                            product.wishList 
+                                            ? 'bg-rose-500 text-white' 
+                                            : 'bg-white/90 backdrop-blur-sm text-gray-500 hover:text-rose-500'
+                                        }`}
+                                    >
+                                        {product.wishList ? <HiHeart size={20} /> : <HiOutlineHeart size={20} />}
+                                    </button>
+                                </div>
+                            )}
+
                             <figure className="relative h-72 overflow-hidden">
                                 <img src={product?.productImage} alt={product?.productName} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                                 <div className="absolute top-4 left-4">
@@ -132,15 +154,9 @@ const AllAvailableProducts = () => {
                             </figure>
 
                             <div className="p-6">
-                                <div className="flex justify-between items-start mb-3">
-                                    <h2 className="text-xl font-bold text-base-content leading-tight h-14 overflow-hidden">{product?.productName}</h2>
-                                    <button 
-                                        onClick={() => handleWishList(product)}
-                                        className={`btn btn-circle btn-sm ${product.wishList ? 'btn-success' : 'btn-ghost bg-base-200'} border-none`}
-                                    >
-                                        {product.wishList ? <HiHeart className="text-lg text-white" /> : <HiOutlineHeart className="text-lg" />}
-                                    </button>
-                                </div>
+                                <h2 className="text-xl font-bold text-base-content leading-tight h-14 overflow-hidden mb-3">
+                                    {product?.productName}
+                                </h2>
 
                                 <div className="grid grid-cols-2 gap-3 mb-6">
                                     <div className="flex items-center gap-2 text-xs font-medium opacity-70">
@@ -163,7 +179,7 @@ const AllAvailableProducts = () => {
                                         </div>
                                         <div className="overflow-hidden">
                                             <p className="text-sm font-black truncate">{product?.sellerName}</p>
-                                            <p className="text-[10px] font-bold opacity-50 uppercase tracking-tighter flex items-center gap-1">
+                                            <p className="text-[10px] font-bold opacity-50 uppercase tracking-tighter">
                                                 {isVerified ? 'Verified Seller' : 'Unverified Seller'}
                                             </p>
                                         </div>
@@ -171,7 +187,7 @@ const AllAvailableProducts = () => {
                                 </div>
 
                                 <div className="flex flex-col gap-2">
-                                    {product?.product !== "sold" ? (
+                                    {!isSold ? (
                                         <label 
                                             htmlFor="bookingModal" 
                                             onClick={() => handleBookingData(product)}
@@ -197,15 +213,7 @@ const AllAvailableProducts = () => {
                 })}
             </div>
 
-            {productItems?.length === 0 && (
-                <div className="text-center py-20 px-6 bg-base-200 rounded-[3rem] border border-base-300 max-w-2xl mx-auto mt-10">
-                    <div className="text-6xl mb-4">⌛</div>
-                    <h2 className="text-2xl font-black mb-2 text-base-content">No Products Found!</h2>
-                    <p className="opacity-60 font-medium">New resell items will be available soon. Check back in 24 hours.</p>
-                    <button onClick={() => navigate('/')} className="btn btn-primary btn-outline mt-8 rounded-2xl px-10">Return Home</button>
-                </div>
-            )}
-
+            {/* Modal rendering */}
             {!closeModal && (
                 <BookNow
                     modalData={bookingData}
