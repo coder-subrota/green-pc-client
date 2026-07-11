@@ -48,7 +48,7 @@ Website-ti te **Seller Dashboard**-er under-e ekti dynamic **Product Update/Edit
 1.  **Dynamic Route Handling:** Frontend URL theke `:id` dhorar jonno React Router-er `useParams` use kora hoyeche।
 2.  **Auto Form Populate:** Component load hobar sathe sathe conditional API matching-er maddhome React Hook Form-er bhetor purono product details automatic load/reset hoy।
 3.  **Smart Image Upload:** ImgBB API dynamic workflow runtime-e run hoy। Seller jodi ager chobi rakhte chay tobe database image text optimized thake, ar jodi notun image dropzone-e drop kore tobe automatic Firebase/ImgBB storage synchronize hoy।
-4.  **Secure Database Operation:** Backend-e MongoDB-r `updateOne` operator ebong secure `verifyJWT` ও `verifySeller` middleware use kora hoyeche, jate kono unauthorized user ba onno seller karo product edit korte na pare।
+4.  **Secure Database Operation:** Backend-e MongoDB-r `updateOne` operator ebong secure `verifyJWT` and `verifySeller` middleware use kora hoyeche, jate kono unauthorized user ba onno seller karo product edit korte na pare।
 
 ---
 
