@@ -6,7 +6,7 @@ const [isAdmin , setIsAdmin] = useState(false) ;
 const [adminLoading , SetAdminLoading] = useState(true) ;
 React.useEffect(() => {
 if(email){
-fetch(`https://green-pc-server-1b9h.vercel.app/users/admin/${email}`) 
+fetch(`https://green-pc-server-7u1g.vercel.app/users/admin/${email}`) 
 .then(res => res.json())
 .then(data => {
 if(data.isAdmin){

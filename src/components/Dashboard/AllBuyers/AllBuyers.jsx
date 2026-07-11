@@ -26,7 +26,7 @@ const AllBuyers = () => {
     const { data: buyers = [], isLoading, refetch } = useQuery({
         queryKey: ['adminBuyersList'],
         queryFn: async () => {
-            const res = await fetch(`https://green-pc-server-1b9h.vercel.app/buyers`, {
+            const res = await fetch(`https://green-pc-server-7u1g.vercel.app/buyers`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("pc-shop-only")}`
                 }
@@ -49,7 +49,7 @@ const AllBuyers = () => {
     }
 
     const handleDelete = (buyerInfo) => {
-        axios.delete(`https://green-pc-server-1b9h.vercel.app/buyers/${buyerInfo._id}`)
+        axios.delete(`https://green-pc-server-7u1g.vercel.app/buyers/${buyerInfo._id}`)
             .then(res => {
                 if (res.status === 401 || res.status === 403) {
                     return navigate("/");

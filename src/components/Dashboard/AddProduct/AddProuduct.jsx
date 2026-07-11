@@ -36,7 +36,7 @@ const AddProduct = () => {
 
     // Fetch categories on mount
     useEffect(() => {
-        axios.get(`https://green-pc-server-1b9h.vercel.app/categoriesName`)
+        axios.get(`https://green-pc-server-7u1g.vercel.app/categoriesName`)
             .then(res => setCategoryNames(res.data))
             .catch(error => console.error("Category Fetch Error:", error));
     }, []);
@@ -44,7 +44,7 @@ const AddProduct = () => {
     // Fetch single category detailed info
     useEffect(() => {
         if (!categoryName) return;
-        axios.get(`https://green-pc-server-1b9h.vercel.app/categoriesInfo/${categoryName}`)
+        axios.get(`https://green-pc-server-7u1g.vercel.app/categoriesInfo/${categoryName}`)
             .then(res => setCategoryInfo(res.data))
             .catch(error => console.error("Category Info Error:", error));
     }, [categoryName]);
@@ -104,7 +104,7 @@ const AddProduct = () => {
                 };
 
                 // Post to Server
-                return fetch(`https://green-pc-server-1b9h.vercel.app/products`, {
+                return fetch(`https://green-pc-server-7u1g.vercel.app/products`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

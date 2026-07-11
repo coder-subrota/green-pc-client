@@ -16,7 +16,7 @@ const MyBuyers = () => {
         queryKey: ['myBuyers', email],
         enabled: !!email,
         queryFn: async () => {
-            const res = await fetch(`https://green-pc-server-1b9h.vercel.app/myBuyers/${email}`, {
+            const res = await fetch(`https://green-pc-server-7u1g.vercel.app/myBuyers/${email}`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("pc-shop-only")}`
                 }

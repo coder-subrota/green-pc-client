@@ -6,7 +6,7 @@ const [isBuyer , setIsBuyer] = useState(false) ;
 const [buyerLoading , SetBuyerLoading] = useState(true) ;
 React.useEffect(() => {
 if(email){
-fetch(`https://green-pc-server-1b9h.vercel.app/users/buyers/${email}`) 
+fetch(`https://green-pc-server-7u1g.vercel.app/users/buyers/${email}`) 
 .then(res => res.json())
 .then(data => {
 if(data.isBuyer){

@@ -35,7 +35,7 @@ const onSubmit = (bookingData) => {
     }
 );
 
- axios.post(`https://green-pc-server-1b9h.vercel.app/orders` , bookingInformations)
+ axios.post(`https://green-pc-server-7u1g.vercel.app/orders` , bookingInformations)
  .then(res => {
 if(res.data.insertedId){
 toast.success("Hurrah you are ordered successfully !! ") ;

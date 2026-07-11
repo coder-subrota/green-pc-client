@@ -25,7 +25,7 @@ const Login = () => {
       profile: profileImage,
       role: role,
     }
-    fetch("https://green-pc-server-1b9h.vercel.app/users", {
+    fetch("https://green-pc-server-7u1g.vercel.app/users", {
       method: "POST",
       headers: {
         'content-type': 'application/json',

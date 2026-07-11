@@ -14,7 +14,7 @@ const Categories = () => {
 
   const { data: categories, isLoading } = useQuery({
     queryKey: ['categories'], // Fixed crucial trailing whitespace bug here
-    queryFn: () => fetch(`https://green-pc-server-1b9h.vercel.app/categories`, {
+    queryFn: () => fetch(`https://green-pc-server-7u1g.vercel.app/categories`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("pc-shop-only")}`

@@ -28,7 +28,7 @@ const ReportedItems = () => {
     const { data: repotedItems = [], isLoading, refetch } = useQuery({
         queryKey: ['reportedItems'],
         queryFn: async () => {
-            const res = await fetch(`https://green-pc-server-1b9h.vercel.app/repotedItems`, {
+            const res = await fetch(`https://green-pc-server-7u1g.vercel.app/repotedItems`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("pc-shop-only")}`
                 }
@@ -52,7 +52,7 @@ const ReportedItems = () => {
 
     // Delete reported item
     const handleReportDelete = (reportedItem) => {
-        axios.delete(`https://green-pc-server-1b9h.vercel.app/deleteRepotedItems/${reportedItem._id}`)
+        axios.delete(`https://green-pc-server-7u1g.vercel.app/deleteRepotedItems/${reportedItem._id}`)
             .then(res => {
                 if (res.data.deletedCount > 0) {
                     toast.success("Reported listing removed successfully!");

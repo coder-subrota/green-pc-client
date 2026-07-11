@@ -17,7 +17,7 @@ const MyOrders = () => {
         queryKey: ['orders', email], // Query key-টি সঠিক করা হয়েছে
         enabled: !!email, // ইমেইল না থাকলে কোয়েরি রান হবে না
         queryFn: async () => {
-            const res = await fetch(`https://green-pc-server-1b9h.vercel.app/orders/${email}`, {
+            const res = await fetch(`https://green-pc-server-7u1g.vercel.app/orders/${email}`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("pc-shop-only")}`
                 }

@@ -17,7 +17,7 @@ const WishList = () => {
         queryKey: ['wishList', email], // Query key-টি উইশলিস্টের জন্য ইউনিক করা হলো
         enabled: !!email,
         queryFn: async () => {
-            const res = await fetch(`https://green-pc-server-1b9h.vercel.app/wishList/${email}`, {
+            const res = await fetch(`https://green-pc-server-7u1g.vercel.app/wishList/${email}`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("pc-shop-only")}`
                 }

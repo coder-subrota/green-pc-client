@@ -41,7 +41,7 @@ const EditProduct = () => {
 
     // Fetch categories on mount
     useEffect(() => {
-        axios.get(`https://green-pc-server-1b9h.vercel.app/categoriesName`)
+        axios.get(`https://green-pc-server-7u1g.vercel.app/categoriesName`)
             .then(res => setCategoryNames(res.data))
             .catch(error => console.error("Category Fetch Error:", error));
     }, []);
@@ -49,7 +49,7 @@ const EditProduct = () => {
     // Get product details and set to form
     useEffect(() => {
         if (!id) return;
-        axios.get(`http://localhost:4030/get-products/${id}`)
+        axios.get(`https://green-pc-server-7u1g.vercel.app/get-products/${id}`)
             .then(res => {
                 setProduct(res.data);
                 setCategoryName(res.data?.productCategory || '');
@@ -61,7 +61,7 @@ const EditProduct = () => {
     // Fetch single category detailed info
     useEffect(() => {
         if (!categoryName) return;
-        axios.get(`https://green-pc-server-1b9h.vercel.app/categoriesInfo/${categoryName}`)
+        axios.get(`https://green-pc-server-7u1g.vercel.app/categoriesInfo/${categoryName}`)
             .then(res => setCategoryInfo(res.data))
             .catch(error => console.error("Category Info Error:", error));
     }, [categoryName]);
@@ -120,7 +120,7 @@ const EditProduct = () => {
             };
 
     
-            const response = await fetch(`http://localhost:4030/edit-product/`, {
+            const response = await fetch(`https://green-pc-server-7u1g.vercel.app/edit-product/`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

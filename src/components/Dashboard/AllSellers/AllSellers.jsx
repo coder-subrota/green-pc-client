@@ -26,7 +26,7 @@ const AllSellers = () => {
   const { data: sellers = [], isLoading, refetch } = useQuery({
     queryKey: ['adminSellersList'],
     queryFn: async () => {
-      const res = await fetch(`https://green-pc-server-1b9h.vercel.app/sellers`, {
+      const res = await fetch(`https://green-pc-server-7u1g.vercel.app/sellers`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("pc-shop-only")}`
         }
@@ -49,7 +49,7 @@ const AllSellers = () => {
   }
 
   const handleDelete = (sellerInfo) => {
-    axios.delete(`https://green-pc-server-1b9h.vercel.app/sellers/${sellerInfo._id}`)
+    axios.delete(`https://green-pc-server-7u1g.vercel.app/sellers/${sellerInfo._id}`)
       .then(res => {
         if (res.data.acknowledged) {
           toast.success("Seller account deleted successfully!");
@@ -60,7 +60,7 @@ const AllSellers = () => {
   };
 
   const handleUpdate = (seller) => {
-    axios.put(`https://green-pc-server-1b9h.vercel.app/sellers/`, seller)
+    axios.put(`https://green-pc-server-7u1g.vercel.app/sellers/`, seller)
       .then(res => {
         if (res.status === 401 || res.status === 403) {
           return navigate("/");
