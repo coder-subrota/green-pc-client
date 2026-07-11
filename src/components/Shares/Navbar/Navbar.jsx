@@ -28,20 +28,6 @@ const Navbar = () => {
           Home
         </NavLink>
       </li>
-      {!user?.uid && (
-        <>
-          <li>
-            <NavLink to="/register" className={({ isActive }) => isActive ? "text-success font-semibold" : ""}>
-              Register
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/login" className={({ isActive }) => isActive ? "text-success font-semibold" : ""}>
-              Login
-            </NavLink>
-          </li>
-        </>
-      )}
       <li>
         <NavLink to="/blogs" className={({ isActive }) => isActive ? "text-success font-semibold" : ""}>
           Blogs
@@ -139,7 +125,7 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="hidden lg:flex items-center gap-2">
-            <NavLink to="/login" className="btn btn-ghost btn-sm">Sign In</NavLink>
+            <NavLink to="/login" className="btn btn-ghost btn-sm">Login</NavLink>
             <NavLink to="/register" className="btn btn-primary btn-sm px-4">Get Started</NavLink>
           </div>
         )}

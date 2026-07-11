@@ -145,8 +145,7 @@ const MyProducts = () => {
 
                                              {/* Delete Icon */}
                                         <label 
-                                            htmlFor="deleteConfirm" 
-                                            onClick={() => handleDeleteButton(product)}
+                                            onClick={() => navigate(`/dashboard/edit-products/${product._id}`)}
                                             className="p-1.5 text-slate-400 hover:text-cyan-500 bg-slate-50 hover:bg-gray-700 rounded-xl transition-colors cursor-pointer"
                                         >
                                             <FiEdit3 className="text-lg" />

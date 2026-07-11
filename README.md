@@ -1,115 +1,75 @@
-# Getting Started with Create React App
+# 💻 Green PC – E-Commerce Marketplace
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Green PC holo ekti full-stack e-commerce web application, jekhane Buyer, Seller ebong Admin-der jonno dedicated functional dashboard royeche। Ekhane computer hardware ebong tech components buy/sell kora jay।
 
-## Available Scripts
+## 🔗 Important Links
 
-In the project directory, you can run:
+* **🌍 Live Website:** [https://ecom-bd-shop-44.web.app/](https://ecom-bd-shop-44.web.app/)
+* **🖥️ Client Side Repo:** [GitHub Front-End](https://github.com/coder-subrota/green-pc-front-end)
+* **⚙️ Server Side Repo:** [GitHub Back-End](https://github.com/coder-subrota/green-pc-server)
+
+---
+
+## 🔑 Demo Access Credentials
+
+System check korar jonno niche tinti role-er demo account dewa holo:
+
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **Admin** | `subrota@gmail.com` | `subrota1234@` |
+| **Seller** | `subrota.operator333@gmail.com` | `subrota.operator333@` |
+| **Buyer** | `subrota.operator222@gmail.com` | `subrota.operator222@` |
+
+---
+
+## 🛠️ Tech Stack & Packages Used
+
+### Client Side (Front-End)
+* **Core:** React.js (Bootstrapped via Create React App)
+* **Routing:** `react-router-dom`
+* **State & Data Fetching:** `react-query` (TanStack Query), `axios`
+* **Authentication:** Firebase Authentication
+* **Forms & Uploads:** `react-hook-form`, `react-dropzone`
+* **UI Elements:** Tailwind CSS, DaisyUI, `react-icons`, `react-spinners`
+* **Notifications:** `react-toastify`
+
+### Server Side (Back-End)
+* **Core:** Node.js, Express.js
+* **Database:** MongoDB
+* **Security:** JSON Web Token (JWT), `cors`, `dotenv`
+* **Development:** `nodemon`
+
+---
+
+## 📦 Seller Product Edit System (Features)
+
+Website-ti te **Seller Dashboard**-er under-e ekti dynamic **Product Update/Edit** features add kora hoyeche:
+
+1.  **Dynamic Route Handling:** Frontend URL theke `:id` dhorar jonno React Router-er `useParams` use kora hoyeche।
+2.  **Auto Form Populate:** Component load hobar sathe sathe conditional API matching-er maddhome React Hook Form-er bhetor purono product details automatic load/reset hoy।
+3.  **Smart Image Upload:** ImgBB API dynamic workflow runtime-e run hoy। Seller jodi ager chobi rakhte chay tobe database image text optimized thake, ar jodi notun image dropzone-e drop kore tobe automatic Firebase/ImgBB storage synchronize hoy।
+4.  **Secure Database Operation:** Backend-e MongoDB-r `updateOne` operator ebong secure `verifyJWT` ও `verifySeller` middleware use kora hoyeche, jate kono unauthorized user ba onno seller karo product edit korte na pare।
+
+---
+
+## 🚀 Working Process (Development Journey)
+
+1.  **Project Initialization:** `npx create-react-app client-side` command-er maddhome front-end scaffolding ebong backend-er jonno `mkdir server-side` create kora hoy।
+2.  **Environment Setup:** Node backend-e `express`, `cors` and Mongoose setup kora hoy ebong credentials safe rakhar jonno `.env` include kora hoy।
+3.  **Authentication Integration:** User validation structures manage korar jonno Firebase Auth configure kora hoy jekhane **Email/Password**, **Google**, and **GitHub** login standard ensure kora hoy।
+4.  **CRUD Implementation:** Dynamic dashboard workflow control korar jonno Axios ebong React Query diye dynamic fetch, post, put operations handled kora hoy।
+
+---
+
+## 🧑‍💻 Available Scripts (Front-End)
+
+Project directory-te nicher commands gulo run korte parben:
 
 ### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+App-ti development mode-e run korbe।
+[http://localhost:3000](http://localhost:3000) e code changes live reload dekhajabe।
 
 ### `npm run build`
+Production build-er jonno ready korbe standard optimization optimized built-in files direct assets mapping configuration create korbe।
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
-
-## live website link
-
-https://green-computers-1a8a8.firebaseapp.com/
-
-## client side repository link
-
-https://github.com/subrota22/all-green-computers/tree/main/client
-
-## server side repository link
-
-https://github.com/subrota22/all-green-computers/tree/main/server
-
-
-## Admin access
-
-adminEmail: subrota23@gmail.com
-
-adminPassword: subrotachandra@#
-
-## My working process
-
-1/First of all I am create an react app using npx create-react-app client-side 
-
-2/Second I am create a server side directory using mkdir server-side 
-
-3/ Packeges installed to build this website , for front end part I am use a lot 
-of packege like react icons , react router dom ,  daisyui , firebase , react-dropzone , react-hook-form , react-spinners and react-toastify
-
-4/Firebase working first I am install firebase than I am use the firebase configaration  to intigrate with my authentications .
-
-5/Authentication method I am used three type of authentications in this website 
-first , email and password authentication  , second Google authentication and third is Github authentication for login or create an user account. 
-
-6/I am use some packeges for back end side like nodemon , cors , express , dotenv 
-to build server side 
-
-7/ I am also used react query and axios to apply crud operation.  
-
-
- ## NOTE : may be  sometime my server will be crashed # all-green-computers
-# all-green-computers
-# all-green-computers
+> ⚠️ **Note:** Sometime standard free tier hosting platforms dynamic logic calculation requests er backend query load handling pressure processing limitations er jonno backend server sleep ba temporary crashed behavior show korte pare।

@@ -25,6 +25,7 @@ import Register from "../Pages/Register/Register";
 import ResetPassword from "../Pages/ResetPassword/ResetPassword";
 import WishListPayment from "../Pages/WishListPayment/WishListPayment";
 import Dashboard from "../Dashboard/Dashboard/Dashboard";
+import EditProduct from "../Dashboard/EditProduct/EditProduct";
 export const routes = createBrowserRouter([
     {
         path: "/", element: <MainLayOut></MainLayOut>, children: [
@@ -105,6 +106,10 @@ export const routes = createBrowserRouter([
             {
                 path: "/dashboard/add-product", element: 
                 <SellerPrivateRouter><AddProuduct></AddProuduct></SellerPrivateRouter>
+            },
+            {
+                path: "/dashboard/edit-products/:id", element: 
+                <SellerPrivateRouter><EditProduct></EditProduct></SellerPrivateRouter>
             },
 
             {

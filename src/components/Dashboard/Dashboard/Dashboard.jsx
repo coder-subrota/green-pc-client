@@ -78,7 +78,6 @@ const Dashboard = () => {
   return (
     <>
       <Helmet>
-        {/* Fixed: Fallback protection logic added here */}
         <title>Dashboard | {currentUser?.role || 'Portal'}</title>
       </Helmet>
 
@@ -94,7 +93,6 @@ const Dashboard = () => {
               </label>
               <div className="hidden lg:block">
                 <h1 className="text-sm font-medium text-base-content/50 uppercase tracking-widest">Management Console</h1>
-                <p className="text-xl font-bold capitalize text-base-content">{location.pathname === '/dashboard' ? 'Overview' : location.pathname.split('/').pop().replace('-', ' ')}</p>
               </div>
             </div>
             
