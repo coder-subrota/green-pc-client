@@ -236,7 +236,7 @@ const MyProducts = () => {
                     </div>
                     <h2 className="text-2xl font-black text-slate-800 tracking-tight">No Products Listed Yet</h2>
                     <p className="text-slate-400 text-sm mt-2 max-w-sm mx-auto">
-                        Ready to make some cash? Add your used hardware components to start selling right away on GreenPC!
+                        Ready to make some cash? Add your used hardware components to start selling right away on AllGreenPC!
                     </p>
                 </div>
             )}

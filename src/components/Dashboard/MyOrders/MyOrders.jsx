@@ -41,7 +41,7 @@ const MyOrders = () => {
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 min-h-screen bg-cyan-700 rounded">
-            <Helmet><title>My Orders | GreenPC</title></Helmet>
+            <Helmet><title>My Orders | AllGreenPC</title></Helmet>
 
             {/* Header Section */}
             <div className="mb-10 text-center md:text-left flex flex-col md:flex-row justify-between items-center border-b border-slate-200 pb-6 gap-4">

@@ -45,7 +45,7 @@ const WishList = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 min-h-screen bg-cyan-700 rounded">
             <Helmet>
-                <title>My Wishlist | GreenPC</title>
+                <title>My Wishlist | AllGreenPC</title>
             </Helmet>
 
             {/* Header Section */}
