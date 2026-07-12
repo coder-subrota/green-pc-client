@@ -26,7 +26,7 @@ const Footer = () => {
               </svg>
             </div>
             <span className="text-2xl font-black tracking-wider text-white bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400">
-             All Green Computers
+             All Green PC
             </span>
           </div>
           <p className="text-sm font-medium text-slate-400 max-w-sm leading-relaxed">
