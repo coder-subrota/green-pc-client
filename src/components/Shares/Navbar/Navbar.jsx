@@ -47,7 +47,6 @@ const Navbar = () => {
       
       {/* --- NAVBAR START: Logo and Mobile Menu --- */}
       <div className="navbar-start">
-        {/* মোবাইল ডিভাইসের জন্য হ্যামবার্গার মেনু */}
         <div className="dropdown lg:hidden">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <HiBars3 className="text-2xl" />
@@ -56,7 +55,6 @@ const Navbar = () => {
             {menuItems}
             {!user?.uid && (
               <>
-                <div className="divider my-1"></div>
                 <li><Link to="/login">Login</Link></li>
                 <li><Link to="/register">Register</Link></li>
               </>
